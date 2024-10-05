@@ -1,0 +1,29 @@
+:root {
+    --sidebar-bg-color: #11101d;
+    --sidebar-link-color: #fff;
+    --hover-color: rgba(255, 255, 255, 0.1);
+    --navbar-bg-color: #1F64BF;
+    --main-bg-color: #e7f2fd;
+    --table-tr-hover: #ccc;
+    --table-bg: #f5f7ff;
+    --table-border: #eee;
+    --table-nth: #ddd;
+    --color-ligth-black: #333;
+    --button-confirm: #518C27;
+    --button-cancel: #F24141;
+    --button-add: #729DF2;
+    --text-ligth: #e7f2fd;
+    --text-dark: #000000;
+    --modal-bg: #fff;
+    --modal-container-bg: rgba(0, 0, 0, 0.5);
+
+    --logo-font-size: 25px;
+
+    --default-border-radius: 8px;
+
+    --default-line-heigth: 25px;
+
+    --font-size-min: 12px;
+    --font-size-med: 18px;
+    --font-size-large: 32px;
+}

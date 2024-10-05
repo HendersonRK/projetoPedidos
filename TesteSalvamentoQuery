@@ -1,0 +1,5 @@
+SELECT a.id_produto, a.nomeproduto, a.nomeprodutoresumido, a.codigobarra, b.descricaouniproduto, c.descricaogrupoproduto
+FROM produto a 
+LEFT JOIN unidadeproduto b ON a.id_unidade = b.id_unidadeproduto
+LEFT JOIN grupoproduto c ON a.id_grupo = c.id_grupoproduto
+ORDER BY a.id_produto;

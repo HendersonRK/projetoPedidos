@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="./src/css/style.css">
+
+    <title>Login CRIE Delivery</title>
+</head>
+<body class="login">
+    <form onsubmit="return false" class="loginform">
+        <h2>Login</h2>
+        <div class="box-usuario">
+            <input type="text" name="loginusuario" id="loginusuario" required>
+            <label for="loginusuario">Usuario:</label>
+        </div>
+        <div class="box-usuario">
+            <input type="password" name="loginsenha" id="loginsenha" required>
+            <label for="loginsenha">Senha:</label>
+        </div>
+        <button onclick="login()">Entrar</button>
+        
+    </form>
+    
+</body>
+<script src="/view/src/js/login.js"></script>
+    <script>
+        async function verifica()
+        {
+            let resultado = await buscarLogin(usuario, senha)
+            if (resultado)
+            {
+                window.location = 'home.html'
+            }    
+        }
+        verifica();
+    </script>
+</html>

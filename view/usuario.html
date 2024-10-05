@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="src/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
+
+    <title>CRIE Delivery</title>
+</head>
+<body>
+    <nav class="sidebar">
+        <a href="#" class="logo">CRIE_Ti</a>
+
+        <div class="menu-content">
+            <ul class="menu-items">
+                <div class="menu-title">Menu Principal</div>
+
+                <li class="item">
+                    <a href="home.html">Home</a>
+                </li>
+
+                <li class="item">
+                    <div class="submenu-item">
+                        <span>Cadastros</span>
+                        <i class="fa-solid fa-circle-chevron-right"></i>
+                    </div>
+
+                    <ul class="menu-items submenu">
+                        <div class="menu-title">
+                            <i class="fa-solid fa-circle-chevron-left"></i>
+                            Cadastros
+                        </div>
+                        <li class="item">
+                            <a href="#">Clientes</a>
+                        </li>
+                        <li>
+                            <a href="#">Transportadores</a>
+                        </li>
+                        <li>
+                            <a href="usuario.html">Usuarios</a>
+                        </li>
+                        <li>
+                            <a href="cadprodutos.html">Produtos</a>
+                        </li>
+                    </ul>
+
+                </li>
+
+                <li class="item">
+                    <div class="submenu-item">
+                        <span>Cadastros Complementares</span>
+                        <i class="fa-solid fa-circle-chevron-right"></i>
+                    </div>
+
+                    <ul class="menu-items submenu">
+                        <div class="menu-title">
+                            <i class="fa-solid fa-circle-chevron-left"></i>
+                            Cadastros Complementares
+                        </div>
+                        <li class="item">
+                            <a href="frmpagamento.html">Formas de Pagamento</a>
+                        </li>
+                        <li class="item">
+                            <a href="unidade.html">Unidades</a>
+                        </li>
+                        <li class="item">
+                            <a href="grupoproduto.html">Grupos</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="item">
+                    <div class="submenu-item">
+                        <span>Relatórios</span>
+                        <i class="fa-solid fa-circle-chevron-right"></i>
+                    </div>
+
+                    <ul class="menu-items submenu">
+                        <div class="menu-title">
+                            <i class="fa-solid fa-circle-chevron-left"></i>
+                            Relatórios
+                        </div>
+                        <li class="item">
+                            <a href="#">Pedidos</a>
+                        </li>
+                        <li class="item">
+                            <a href="#">Cadastros</a>
+                        </li>
+                        <li class="item">
+                            <a href="#">Financeiro</a>
+                        </li>                        
+                    </ul>
+                </li>
+
+                <li class="item">
+                    <a href="#">Link3</a>
+                </li>
+
+                <li class="item">
+                    <a href="#">Configurações</a>
+                </li>
+            </ul>
+        </div>                   
+    </nav>
+
+    <nav class="navbar">
+        <i class="fa-solid fa-bars" id="sidebar-close"></i>
+    </nav>
+
+    <main>
+        <div class="mainpagamento">
+            <div class="mainheader">
+                <h2>Cadastro de Usuarios</h2>
+                <button class="btnacao" onclick="openModal();">Incluir</button>
+            </div>
+            <!--
+                <div class="cadastrofrmpagamento">
+                    <p class="labelaviso"></p>
+                    <label for="descricao">Descrição:</label>
+                    <input name="descricaofrmpagamento" type="text" id="descricaofrmpagamento" placeholder="descrição do pagamento">
+                    <button onclick="gravaFrmPagamento();">Gravar</button>
+                </div>                
+            --> 
+            <div class="tabela">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Editar</th>
+                            <th>Excluir</th>
+                            <th>Código</th>
+                            <th>Usuarios</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody-usuarios"></tbody>
+                </table>
+            </div>                            
+        </div>
+        <div class="modal-container">
+            <div class="modal">
+                <form onsubmit="return false;">
+                    <div class="usuario"> 
+                        <input type="text" id="idusuario" style="display: none;">
+                        <label for="nomeusuario">Usuario:</label>
+                        <input name="nomeusuario" type="text" id="nomeusuario" placeholder="Nome de Usuario" required>
+                            
+                        <label for="senhausuario">Senha:</label>
+                        <div class="senha">
+                            <input name="senhausuario" type="password" id="senhausuario" required>
+                            <i class="fa-regular fa-eye" id="btn-senhausuario" onclick="mostrarSenha()"></i>
+                        </div> 
+
+                        <label for="repetirsenha">Repita sua Senha:</label>
+                        <div class="senha">
+                            <input name="repetirsenha" type="password" id="repetirsenha" required>
+                            <i class="fa-regular fa-eye" id="btn-repetirsenha" onclick="mostrarConfirmaSenha()"></i>
+                        </div>                                             
+                    </div>
+                    
+                    <button class="btnacao" onclick="confereSenha();">Gravar</button>
+                </form>
+            </div>
+        </div>
+    </main>   
+    
+</body>
+    <script src="src/js/style.js"></script>
+    <script src="src/js/login.js"></script>
+    <script src="src/js/usuario.js"></script>
+    <script>
+        async function start()
+        {
+            verificaLogin()
+            listarUsuarios()    
+        }
+        start()             
+    </script>
+</html>

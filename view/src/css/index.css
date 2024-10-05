@@ -1,0 +1,61 @@
+.login{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 100vh;
+    background-color: var(--main-bg-color);    
+}
+
+.loginform {
+    background-color: var(--color-ligth-black);
+    border-radius: var(--default-border-radius);
+    padding: 40px;
+    width: 400px;
+}
+
+.loginform h2 {
+    margin-bottom: 2rem;
+    font-size: var(--font-size-large);
+    color: var(--text-ligth);
+    text-align: center;
+}
+
+.loginform .box-usuario {
+    position: relative;
+}
+
+.loginform .box-usuario input { 
+    width: 100%;
+    padding: 10px 0;
+    outline: none;
+    border: 0;
+    background: transparent;
+    border-bottom: 1px solid;
+    color: var(--text-ligth);
+    font-size: var(--font-size-med);
+    margin-bottom: 30px;
+}
+
+.loginform .box-usuario label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 10px 0;
+    color: var(--text-ligth);
+    font-size: var(--font-size-med);
+    pointer-events: none;
+    transition: 0.5s;
+    font-weight: bold;
+}
+
+.loginform .box-usuario input:focus~label, 
+.loginform .box-usuario input:valid~label {
+    top: -20px;
+    left: 0;
+    color: var(--button-add);
+    font-size: var(--font-size-min);
+}
+
+button {
+    padding: 0px 15px 0px 15px;
+}
