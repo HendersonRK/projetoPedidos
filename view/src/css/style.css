@@ -5,6 +5,7 @@
 @import url(unidadeproduto.css);
 @import url(usuario.css);
 @import url(index.css);
+@import url(configuracoes.css);
 
 * {
     margin: 0;

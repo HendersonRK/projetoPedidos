@@ -69,7 +69,7 @@ async function gravarUnidadeProduto()
     }
 }
 
-async function listarUnidadeProduto() 
+/*async function listarUnidadeProduto() 
 {
     const myHeaders = new Headers()
     myHeaders.append("Content-Type", "application/json")
@@ -85,11 +85,35 @@ async function listarUnidadeProduto()
     let unidadesProdutos = await result.json()
     
     return unidadesProdutos
+}*/
+
+async function listarUnidadeProduto(buscaUnidade= '') 
+{   
+    let url = buscaUnidade === '' ? '/unidadeproduto' : '/unidadeproduto/buscapornome/'+buscaUnidade
+
+    const myHeaders = new Headers()
+    myHeaders.append("Content-Type", "application/json")
+    myHeaders.append('Authorization', authorization)
+
+    const options ={
+        headers: myHeaders,
+        method: 'GET',
+        redirect: 'follow'
+    };
+
+    let result = await fetch (apiUrlUnidade+url, options)
+    let unidadesProdutos = await result.json()
+    
+    console.log (unidadesProdutos)
+
+    return unidadesProdutos  
 }
 
-async function montaTabela()
+async function montaTabela(buscaUnidade)
 {
-    let resultado = await listarUnidadeProduto()
+    let resultado = await listarUnidadeProduto(buscaUnidade)
+    console.log (resultado)
+    console.log(resultado.length)
 
     let html = ''  
 
@@ -107,6 +131,7 @@ async function montaTabela()
             <td>${unidadeProduto.descricaouniproduto}</td>
         </tr>`
     }
+    console.log(html)
     document.getElementById('tbody-unidadeprodutos').innerHTML = html
 }
 
@@ -178,3 +203,45 @@ async function editarUnidadeProduto(id)
 {
     openModal(true, id)   
 }
+
+function buscaUnidadePorNome() 
+{
+    let nomeBusca = document.getElementById('campopesquisa').value
+    //console.log(nomeBusca)
+    montaTabela(nomeBusca)
+    //console.log(buscaUnidade)
+    //document.getElementById('tbody-unidadeprodutos').innerHTML = buscaUnidade
+    //window.location.reload()
+}
+
+/*async function geraPdf(html) 
+{
+    const browser = await puppeteer.launch({headless:true})
+    const page = await browser.newPage()
+    await page.setViewport({width: 1366, height: 768})
+    await page.setViewport(html)
+
+    const pdfBuffer = await page.pdf()
+
+    await page.close()
+    await browser.close()
+
+    return pdfBuffer
+}
+
+async function pdf() 
+{
+    for (let index = 0; index < resultado.length; index++)
+    {
+        let unidadeProduto = resultado[index]
+       
+        html += `
+        <tr>
+            <td>${unidadeProduto.id_unidadeproduto}</td>
+            <td>${unidadeProduto.descricaouniproduto}</td>
+        </tr>`
+    }
+
+    let pdfBuffer = await geraPdf(html)
+    fs.writeFileSync('UnidadeProdutos.pdf', pdfBuffer)
+}*/

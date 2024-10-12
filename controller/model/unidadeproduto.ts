@@ -1,4 +1,5 @@
 import { dbQuery } from "../database";
+import puppeteer from "puppeteer";
 
 export class UnidadeProduto
 {
@@ -16,7 +17,7 @@ export class UnidadeProduto
         return errors;
     }
 
-     static async listarTodas():Promise<UnidadeProduto[]>
+    static async listarTodas():Promise<UnidadeProduto[]>
     {
         let sql = `SELECT * FROM unidadeproduto ORDER BY id_unidadeproduto;`;
         let resultado = await dbQuery(sql);
@@ -45,6 +46,22 @@ export class UnidadeProduto
             return unidadeProduto
         }
         return null;
+    }
+
+    static async listaUmPorNome(nomeUProduto: any): Promise<UnidadeProduto|null>
+    {
+        let nomeUnidade = "%"+nomeUProduto+"%"
+        let sql =  `SELECT * FROM unidadeproduto WHERE descricaouniproduto ILIKE $1 LIMIT 1;`;        
+        let resultado = await dbQuery(sql, [nomeUnidade]);
+
+        if (resultado.length > 0)
+        {
+            let newUnidade = new UnidadeProduto()
+            Object.assign(newUnidade, resultado[0]) //atribui o resultado a instancia da classe
+            return newUnidade
+        }
+        return null;
+        
     }
 
     public async insert():Promise<UnidadeProduto|null>
@@ -87,4 +104,34 @@ export class UnidadeProduto
 
         return null;     
     }
+
+   /* public async geraPdf() 
+    {
+        let html = ''
+        const browser = await puppeteer.launch({headless:true})
+        const page = await browser.newPage();
+        await page.setViewport({width: 1366, height: 768})
+    
+        const pdfBuffer = await page.pdf()
+
+        await page.close()
+        await browser.close()
+
+        for (let index = 0; index < pdfBuffer.length; index++)
+        {
+            let unidadeProduto = new UnidadeProduto()
+            unidadeProduto = pdfBuffer[index]
+        
+            html += `
+                <tr>
+                    <td>${unidadeProduto.id}</td>
+                    <td>${unidadeProduto.descricaouniproduto}</td>
+                </tr>`
+        }
+
+        await page.setContent(html)
+
+    //return pdfBuffer
+    }*/
+
 }

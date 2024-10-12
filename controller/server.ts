@@ -5,7 +5,8 @@ import { UnidadeProduto } from '../controller/model/unidadeproduto';
 import { Usuario } from '../controller/model/usuario';
 import { GrupoProduto } from './model/grupoproduto';
 import { Produto } from './model/produto';
-import { client, dbQuery } from './database';
+import { enviarEmail } from './model/email';
+import { Configuracoes } from './model/configuracoes';
 
 const port: Number = 3000;
 let server: Express = express();
@@ -272,6 +273,20 @@ server.get('/unidadeproduto/:codigo', async (req: Request, res: Response): Promi
     }
 
     let erro = {"codigo": id, "erro":"Unidade do Produto não encontrada"}
+    return res.status(400).json(erro)
+});
+
+//retorna um unidade de produto do banco de dados por nome
+server.get('/unidadeproduto/buscapornome/:nome', async (req: Request, res: Response): Promise<Response> => 
+{    
+    let nomeUnidade = String(req.params.nome)
+    let unidade = await UnidadeProduto.listaUmPorNome(nomeUnidade)
+    if (unidade != null)
+    {
+        return res.status(200).json([unidade])
+    }
+
+    let erro = {"Unidade": " ", "erro" : "Unidade de produto não encontrada"}
     return res.status(400).json(erro)
 });
 
@@ -546,8 +561,67 @@ server.put('/usuario/:codigo', async (req: Request, res: Response): Promise<Resp
 });
 
 
+//ROTAS DE CONFIGURAÇÕES
+//busca as configurações de email no banco de dados
+server.get('/configuracoes/email', async (req:Request, res:Response): Promise<Response> =>
+{
+    let configuracoes = await Configuracoes.listarConfiguracoes()
+    return res.status(200).json(configuracoes);
+})
+
+//edita as configurações de email no banco de dados
+server.put('/configuracoes/email', async (req:Request, res:Response) =>
+{
+    let id = 1
+    let configuracao = await Configuracoes.listarConfiguracoes()
+        
+    if (configuracao == null)
+    {
+        let erro = {"Configuracao": '', "erro" : "Contate o administrador do sistema, erro ao importar configurações do sistema!"}
+        return res.status(400).json(erro)
+    }
+
+    configuracao.hostname = req.body.hostname
+    configuracao.porta = req.body.porta
+    configuracao.emailusername = req.body.emailusername
+    configuracao.emailpassword = req.body.emailpassword
+    configuracao.emailretorno = req.body.emailretorno
+
+    /* todo validação das configurações de email
+    let erros : string[] = usuario.validate()
+
+    if (erros.length > 0)
+    {
+        let json = {"erros": erros}
+        return res.status(400).json(json)
+    }*/
+
+    configuracao.update();
+
+    if (configuracao.id_configuracao)
+    {
+        return res.status(200).json(configuracao);
+    }
+    
+    let erro = {"id" : 1, "erro" : "Erro ao editar Configuração, contate o suporte!"}
+    return res.status(400).json(erro);
+}) 
+
+
 //SERVIDOR
 server.listen(port, () =>
 {
     console.log('Server iniciado na porta: '+port)
 })
+
+
+//emails
+server.get ('/email', async (req: Request, res: Response) =>
+{
+    res.json(await enviarEmail('henderson.kettermann@gmail.com'))
+})
+
+/*server.get ('/pdf', async (req: Request, res: Response) => 
+{
+
+})*/

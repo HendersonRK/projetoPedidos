@@ -1,6 +1,4 @@
 const apiUrlUsuario = "http://localhost:3000"
-//let usuario = localStorage.getItem('usuario')
-//let senha = localStorage.getItem('senha')
 let authorization = localStorage.getItem('Authorization')
 
 async function buscarLogin(authorization) 
@@ -8,8 +6,6 @@ async function buscarLogin(authorization)
     const myHeaders = new Headers()
     myHeaders.append("Content-Type", "application/json")
     myHeaders.append('Authorization', authorization)
-    //myHeaders.append('usuario', usuario)
-    //myHeaders.append('senha', senha)
     
     const options = {
         method: 'GET',
@@ -33,15 +29,12 @@ async function buscarLogin(authorization)
     return false
 }
 
-async function buscarLoginNome(usuario, senha) 
+async function buscarLoginNome(usuario) 
 {
     const myHeaders = new Headers()
     myHeaders.append("Content-Type", "application/json")
     myHeaders.append('Authorization', authorization)
-    /*myHeaders.append("Content-Type", "application/json")
-    myHeaders.append('usuario', usuario)
-    myHeaders.append('senha', senha)*/
-    
+
     const options = {
         method: 'GET',
         headers: myHeaders
