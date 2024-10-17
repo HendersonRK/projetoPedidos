@@ -1,4 +1,8 @@
-table td label {
+label{
     padding: 15px;
     max-width: 350px;
+}
+
+input{
+    padding: 0 5px 0 5px;
 }

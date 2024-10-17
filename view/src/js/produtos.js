@@ -148,18 +148,17 @@ async function carregarProduto(id)
         let result = await fetch(apiUrl+"/produto/"+id, options)
         let produto = await result.json();
 
-        document.getElementById('idproduto').value = usuario.id_usuario
-        document.getElementById('nomeproduto').value = usuario.usuario
-        document.getElementById('nomeprodutoreduzido').value = usuario.usuario
-        document.getElementById('codigobarra').value = usuario.usuario
-        document.getElementById('unidadeproduto').value = usuario.usuario
-        document.getElementById('grupoproduto').value = usuario.usuario
-
+        document.getElementById('idproduto').value = produto.id_produto
+        document.getElementById('nomeproduto').value = produto.nomeproduto
+        document.getElementById('nomeprodutoreduzido').value = produto.nomeprodutoresumido
+        document.getElementById('codigobarra').value = produto.codigobarra
+        document.getElementById('selectunidadeproduto').value = produto.id_unidade
+        document.getElementById('selectgrupoproduto').value = produto.id_grupo
     }    
 }
 
 async function editarProduto(id) 
 {
-    openModal(true, id)   
+    openModalProduto(true, id)   
 }
 

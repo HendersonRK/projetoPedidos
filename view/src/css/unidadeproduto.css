@@ -1,4 +1,4 @@
-.mainunidadeproduto {
+/*.mainunidadeproduto {
     display: flex;
     flex-direction: column;
     margin-top: 1rem;
@@ -113,4 +113,4 @@ tr:hover {
         opacity: 1;
         transform: translate3d(0, 0, 0);
     }
-}
+}*/
