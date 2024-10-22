@@ -19,6 +19,13 @@ function openModalProduto (editar = false, id)
         carregarProduto(id);
         editar == false
     }
+    else
+    {
+        document.getElementById('idproduto').value = ''
+        document.getElementById('nomeproduto').value = ''
+        document.getElementById('nomeprodutoreduzido').value = ''
+        document.getElementById('codigobarra').value = ''
+    }
 }
 
 //funções de comunicação com back end.

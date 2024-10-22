@@ -3,3 +3,12 @@ FROM produto a
 LEFT JOIN unidadeproduto b ON a.id_unidade = b.id_unidadeproduto
 LEFT JOIN grupoproduto c ON a.id_grupo = c.id_grupoproduto
 ORDER BY a.id_produto;
+
+ALTER TABLE pedido ADD COLUMN datapedido Date;
+
+SELECT a.id_pedido, b.nome, a.datapedido, a.situacao
+FROM pedido a 
+LEFT JOIN cliente b ON a.id_cliente = b.id_cliente
+ORDER BY a.id_pedido;
+
+ALTER TABLE pedido DROP COLUMN data_pedido;

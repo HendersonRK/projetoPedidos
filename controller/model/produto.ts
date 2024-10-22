@@ -79,7 +79,7 @@ export class Produto
 
     public async update():Promise<Produto|null>
     {
-        let sql = `UPDATE produto SET nomeproduto = $1, nomeprodutoresumido = $2, codigobarra = $3, id_unidade = $4, id_grupo = $5 WHERE id_grupoproduto = $6;`;    
+        let sql = `UPDATE produto SET nomeproduto = $1, nomeprodutoresumido = $2, codigobarra = $3, id_unidade = $4, id_grupo = $5 WHERE id_produto = $6;`;    
         let params = [this.nomeproduto, this.nomeprodutoresumido, this.codigobarra, this.id_unidade, this.id_grupo, this.id_produto];
 
         let resultado = await dbQuery(sql,params);

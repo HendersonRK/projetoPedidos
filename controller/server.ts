@@ -8,6 +8,10 @@ import { routeProduto } from './routes/routeproduto';
 import { routeUsuario } from './routes/reouteusuario';
 import { routeConfiguracao } from './routes/routeconfiguracaoemail';
 import { routeEmail } from './routes/routeemail';
+import { routeTipoFrete } from './routes/routetipofrete';
+import { routeCliente } from './routes/routecliente';
+import { routePrazoPagamento } from './routes/routeprazopagamento';
+import { routePedido } from './routes/routepedido';
 
 const port: Number = 3000;
 let server: Express = express();
@@ -22,6 +26,10 @@ server.use(routeProduto)
 server.use(routeUsuario)
 server.use(routeConfiguracao)
 server.use(routeEmail)
+server.use(routeTipoFrete)
+server.use(routeCliente)
+server.use(routePrazoPagamento)
+server.use(routePedido)
 
 
 server.use(async(req: Request, res: Response, next: NextFunction) =>

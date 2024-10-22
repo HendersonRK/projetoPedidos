@@ -8,8 +8,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
 
     <title>CRIE Delivery</title>
+    
 </head>
 <body>
+    
     <nav class="sidebar">
         <a href="#" class="logo">CRIE_Ti</a>
 
@@ -129,10 +131,10 @@
     </nav>
 
     <main class="main">
-            <div class="divmain">
-                <div class="mainheader">
-                <h2>Cadastro Produtos</h2>
-                <button class="btnacao" onclick="openModalProduto(false);">Incluir</button>
+        <div class="divmain">
+            <div class="mainheader">
+                <h2>Cadastro de Clientes</h2>
+                <button class="btnacao" onclick="openModal(null);">Incluir</button>
             </div>
             
             <div class="tabela">
@@ -142,60 +144,65 @@
                             <th>Editar</th>
                             <th>Excluir</th>
                             <th>Código</th>
-                            <th>Produto</th>
-                            <th>Unidade</th>
-                            <th>Grupo</th>
+                            <th>Nome</th>
+                            <th>Cidade</th>
+                            <th>UF</th>
+                            <th>Telefone</th>
+                            <th>email</th>
                         </tr>
                     </thead>
-                    <tbody id="tbody-produto"></tbody>
+                    <tbody id="tbody-clientes"></tbody>
                 </table>
             </div>                            
         </div>
+        
         <div class="modal-container">
             <div class="modal">
                 <form onsubmit="return false">
-                    <input type="text" id="idproduto" style="display: none;">
+                    <input type="text" id="idcliente" style="display: none;">
                     <div>
-                        <label for="nomeproduto">Nome:</label>
-                        <input name="nomeproduto" type="text" id="nomeproduto" placeholder="nome do produto">
-                    </div>
-                    <div>
-                        <label for="nomeprodutoreduzido">Nome Reduzido:</label>
-                        <input name="nomeprodutoreduzido" type="text" id="nomeprodutoreduzido" placeholder="nome reduzido do produto">
-                    </div>
-                    <div>                        
-                        <label for="codigobarra">Cód de Barras:</label>
-                        <input type="text" name="codigobarra" id="codigobarra" placeholder="codigo barras">
+                        <label for="nomecliente">Nome:</label>
+                        <input name="nomecliente" type="text" id="nomecliente" placeholder="nome do cliente">
                     </div>
                     <div>
-                        <label for="unidadeproduto">Unidade:</label>
-                        <select name="selectunidadeproduto" id="selectunidadeproduto"></select>
+                        <label for="cpfcliente">CPF:</label>
+                        <input name="cpfcliente" type="text" id="cpfcliente" placeholder="CPF do cliente">
                     </div>
-                    <div>                        
-                        <label for="selectgrupoproduto">Grupo:</label>
-                        <select name="selectgrupoproduto" id="selectgrupoproduto"></select>
+                    <div>
+                        <label for="selectsiglauf">UF:</label>
+                        <select id="selectsiglauf" onchange="carregaCidades()"></select>
                     </div>
-                    
-                    <button class="btnacao" onclick="gravarProduto();">Gravar</button>
+                    <div>
+                        <label for="selectcidade">Cidade:</label>
+                        <select id="selectcidade"></select>
+                    </div>
+                    <div>
+                        <label for="telefonecliente">Telefone:</label>
+                        <input name="telefonecliente" type="text" id="telefonecliente" placeholder="telefone do cliente">
+                    </div>
+                    <div>
+                        <label for="emailcliente">email:</label>
+                        <input name="emailcliente" type="email" id="emailcliente" placeholder="email do cliente">
+                    </div>
+
+                    <button class="btnacao" onclick="gravarCliente()">Gravar</button>
                 </form>
             </div>
         </div>
-    </main>
-    
+    </main> 
+
 </body>
     <script src="src/js/style.js"></script>
     <script src="src/js/login.js"></script>
-    <script src="src/js/produtos.js"></script>
-    <script src="src/js/unidadeproduto.js"></script>
-    <script src="src/js/grupoproduto.js"></script>
+    <script src="src/js/cadclientes.js"></script>
     <script>
-        async function start()
-        {
-            await verificaLogin()
-            await listarProdutos() 
-            await montaSelectUnidadeProduto() 
-            await montaSelectGrupoProduto()  
-        }
-        start()
-    </script>
+    async function start()
+    {
+        verificaLogin()
+        motaTabelaClientes()
+        await carregaEstados()
+        await carregaCidades()
+    }
+    start();
+</script> 
 </html>

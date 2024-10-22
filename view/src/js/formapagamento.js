@@ -10,7 +10,7 @@ function pressEnter()
     }
 }
 
-function openModal(editar = false, id)
+function openModalFormaPagamento(editar = false, id)
 {
     modal.classList.add('active')
 
@@ -83,11 +83,18 @@ async function listarFrmPagamento()
     
     let result = await fetch (apiUrl+'/formapagamento', options);
     let formasPagamento = await result.json();
-    let html = ''
+    
+    return formasPagamento    
+}
 
-    for (let index = 0; index < formasPagamento.length; index++)
+async function montaTabelaFormaPagamento() 
+{ 
+    let html = ''
+    let resultado = await listarFrmPagamento()
+    
+    for (let index = 0; index < resultado.length; index++)
     {        
-        let formaPagamento = formasPagamento[index];      
+        let formaPagamento = resultado[index];      
         let btnExlcuir = `<button class="btnexcluir" onclick="excluirFormaPagamento(${formaPagamento.id_frmpagamento})">Excluir</button>`;
         let btnEditar = `<button class="btneditar" onclick="editarFormaPagamento(${formaPagamento.id_frmpagamento})">Editar</button>`;
 
@@ -101,6 +108,21 @@ async function listarFrmPagamento()
     }
     document.getElementById('tbody-frmpagamento').innerHTML = html;
 }
+
+async function montaSelectFormaPagamento() 
+{
+    let resultado = await listarFrmPagamento()
+    let html = ''
+
+    for (let index = 0; index < resultado.length; index++)
+    {
+        let formaPagamento = resultado[index]
+        html += `<option value="${formaPagamento.id_frmpagamento}">${formaPagamento.descricaofrmpagamento}</option>`
+    }
+
+    document.getElementById('selectformapagamento').innerHTML = html
+}
+
 
 async function excluirFormaPagamento(id) 
 {

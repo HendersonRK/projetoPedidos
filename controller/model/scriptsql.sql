@@ -49,4 +49,53 @@ INSERT INTO configuracoes (hostname, emailretorno, porta, emailusername, emailpa
 VALUES ('smtp.mailersend.net', 'email@trial-3z0vklo2vj747qrx.mlsender.net', 587, 'MS_9TWvnC@trial-3z0vklo2vj747qrx.mlsender.net', 'v0PEwbfIWreXxG6V')
 RETURNING id_configuracao;
 
+CREATE TABLE cliente (
+    id_cliente serial,
+    nome varchar(250) NOT NULL, 
+    cpf varchar(14) NOT NULL,
+    siglauf varchar(2) NOT NULL,
+    cidade varchar(50) NOT NULL, 
+    telefone varchar(20),
+    email varchar(200),
+    PRIMARY KEY (id_cliente)
+);
 
+CREATE TABLE tipofrete (
+    id_tipofrete serial,
+    tipofrete varchar(75),
+    PRIMARY KEY (id_tipofrete)
+);
+
+CREATE TABLE prazopagamento(
+    id_prazopagamento serial,
+    prazopagamento varchar(50),
+    PRIMARY KEY (id_prazopagamento)
+);
+
+CREATE TABLE pedido (
+    id_pedido serial, 
+    data_pedido date,
+    situacao int, 
+    observacoes TEXT,
+    id_formapagamento int, 
+    id_prazopagamento int, 
+    id_cliente int,
+    id_tipofrete int, 
+    PRIMARY KEY (id_pedido),
+    FOREIGN KEY (id_formapagamento) REFERENCES formapagamento (id_frmpagamento),
+    FOREIGN KEY (id_prazopagamento) REFERENCES prazopagamento (id_prazopagamento),
+    FOREIGN KEY (id_cliente) REFERENCES cliente (id_cliente),
+    FOREIGN KEY (id_tipofrete) REFERENCES tipofrete (id_tipofrete)
+);
+
+CREATE TABLE pedidoitem (
+    id_pedidoitem serial, 
+    id_pedido int, 
+    id_produto int,
+    quantidade int NOT NULL,
+    valorunitario decimal(10,2) NOT NULL, 
+    valortotal decimal(10,2) NOT NULL, 
+    PRIMARY KEY (id_pedidoitem),
+    FOREIGN KEY (id_pedido) REFERENCES pedido (id_pedido),
+    FOREIGN KEY (id_produto) REFERENCES produto (id_produto)
+);

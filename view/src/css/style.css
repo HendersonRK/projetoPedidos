@@ -1,11 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
+@import url(configuracoes.css);
+@import url(global.css);
+@import url(index.css);
 @import url(sidebar.css);
 @import url(variables.css);
-@import url(frmpagamento.css);
-@import url(unidadeproduto.css);
-@import url(usuario.css);
-@import url(index.css);
-@import url(configuracoes.css);
 
 * {
     margin: 0;

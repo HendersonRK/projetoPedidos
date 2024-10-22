@@ -8,8 +8,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
 
     <title>CRIE Delivery</title>
+    
 </head>
 <body>
+    
     <nav class="sidebar">
         <a href="#" class="logo">CRIE_Ti</a>
 
@@ -128,11 +130,11 @@
         <i class="fa-solid fa-bars" id="sidebar-close"></i>
     </nav>
 
-    <main class="main">
-            <div class="divmain">
-                <div class="mainheader">
-                <h2>Cadastro Produtos</h2>
-                <button class="btnacao" onclick="openModalProduto(false);">Incluir</button>
+        <main class="main">
+        <div class="divmain">
+            <div class="mainheader">
+                <h2>Pedidos</h2>
+                <button class="btnacao" onclick="openModal(null);">Incluir</button>
             </div>
             
             <div class="tabela">
@@ -142,60 +144,71 @@
                             <th>Editar</th>
                             <th>Excluir</th>
                             <th>Código</th>
-                            <th>Produto</th>
-                            <th>Unidade</th>
-                            <th>Grupo</th>
+                            <th>Cliente</th>
+                            <th>Data</th>
+                            <th>Situacao</th>
                         </tr>
                     </thead>
-                    <tbody id="tbody-produto"></tbody>
+                    <tbody id="tbody-pedido"></tbody>
                 </table>
             </div>                            
         </div>
+        
         <div class="modal-container">
             <div class="modal">
                 <form onsubmit="return false">
-                    <input type="text" id="idproduto" style="display: none;">
+                    <input type="text" id="idpedido" style="display: none;">
                     <div>
-                        <label for="nomeproduto">Nome:</label>
-                        <input name="nomeproduto" type="text" id="nomeproduto" placeholder="nome do produto">
+                        <label for="datapedido">Data:</label>
+                        <input type="date" id="datapedido" />
                     </div>
                     <div>
-                        <label for="nomeprodutoreduzido">Nome Reduzido:</label>
-                        <input name="nomeprodutoreduzido" type="text" id="nomeprodutoreduzido" placeholder="nome reduzido do produto">
+                        <label for="situacaopedido">Situacao:</label>
+                        <input name="situacaopedido" type="text" id="situacaopedido" placeholder="situacao do pedido">
+                    </div>
+                    <div>
+                        <label for="observacaopedido">Observação:</label>
+                        <textarea name="observacaopedido" id="observacaopedido" cols="45" rows="3"></textarea>
+                    </div>
+                    <div>
+                        <label for="selectformapagamento">Forma de Pagamento:</label>
+                        <select name="selectformapagamento" id="selectformapagamento"></select>
                     </div>
                     <div>                        
-                        <label for="codigobarra">Cód de Barras:</label>
-                        <input type="text" name="codigobarra" id="codigobarra" placeholder="codigo barras">
-                    </div>
-                    <div>
-                        <label for="unidadeproduto">Unidade:</label>
-                        <select name="selectunidadeproduto" id="selectunidadeproduto"></select>
+                        <label for="selectprazopagamento">Prazo de Pagamento:</label>
+                        <select name="selectprazopagamento" id="selectprazopagamento"></select>
                     </div>
                     <div>                        
-                        <label for="selectgrupoproduto">Grupo:</label>
-                        <select name="selectgrupoproduto" id="selectgrupoproduto"></select>
+                        <label for="selecttipofrete">Tipo de Frete:</label>
+                        <select name="selecttipofrete" id="selecttipofrete"></select>
                     </div>
-                    
-                    <button class="btnacao" onclick="gravarProduto();">Gravar</button>
+                    <div>
+                        <label for="codigocliente">Cliente:</label>
+                        <input name="codigocliente" type="text" id="codigocliente">
+                        <input name="nomecliente" type="text" id="nomecliente">
+                    </div>                    
+                    <button class="btnacao" onclick="gravarPedido()">Gravar</button>
                 </form>
             </div>
         </div>
-    </main>
+    </main> 
     
 </body>
     <script src="src/js/style.js"></script>
     <script src="src/js/login.js"></script>
-    <script src="src/js/produtos.js"></script>
-    <script src="src/js/unidadeproduto.js"></script>
-    <script src="src/js/grupoproduto.js"></script>
+    <script src="src/js/cadpedidos.js"></script>
+    <script src="src/js/formapagamento.js"></script>
+    <script src="src/js/prazopagamento.js"></script>
+    <script src="src/js/tipofrete.js"></script>
     <script>
-        async function start()
-        {
-            await verificaLogin()
-            await listarProdutos() 
-            await montaSelectUnidadeProduto() 
-            await montaSelectGrupoProduto()  
-        }
-        start()
-    </script>
+    async function start()
+    {
+        await verificaLogin()
+        await listarPedidos()
+        await montaSelectFormaPagamento()
+        await montaSelectPrazoPagamento()
+        await montaSelectTipoFrete()
+    }
+    start();
+</script> 
 </html>
