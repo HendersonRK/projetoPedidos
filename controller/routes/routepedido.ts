@@ -79,13 +79,13 @@ routePedido.put('/pedido/:id', async (req: Request, res: Response): Promise<Resp
         return res.status(400).json(erro)
     }
 
-    pedido.datapedido = req.body.da
-    pedido.situacao = req.body.
-    pedido.observacoes = req.body
-    pedido.id_formapagamento = req.body
-    pedido.id_prazopagamento = req.body
-    pedido.id_cliente = req.body
-    pedido.id_tipofrete = req.body
+    pedido.datapedido = req.body.datapedido
+    pedido.situacao = req.body.situacaopedido
+    pedido.observacoes = req.body.observacaopedido
+    pedido.id_formapagamento = req.body.id_formapagamento
+    pedido.id_prazopagamento = req.body.id_prazopagamento
+    pedido.id_cliente = req.body.id_cliente
+    pedido.id_tipofrete = req.body.id_tipofrete
     
     /*let erros : string[] = formaPagamento.validate()
 

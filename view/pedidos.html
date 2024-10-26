@@ -134,7 +134,7 @@
         <div class="divmain">
             <div class="mainheader">
                 <h2>Pedidos</h2>
-                <button class="btnacao" onclick="openModal(null);">Incluir</button>
+                <button class="btnacao" onclick="openModalPedidos(null);">Incluir</button>
             </div>
             
             <div class="tabela">
@@ -143,6 +143,7 @@
                         <tr>
                             <th>Editar</th>
                             <th>Excluir</th>
+                            <th>Itens</th>
                             <th>Código</th>
                             <th>Cliente</th>
                             <th>Data</th>
@@ -156,38 +157,64 @@
         
         <div class="modal-container">
             <div class="modal">
-                <form onsubmit="return false">
-                    <input type="text" id="idpedido" style="display: none;">
-                    <div>
-                        <label for="datapedido">Data:</label>
-                        <input type="date" id="datapedido" />
+                
+                <form onsubmit="return false">                    
+                    <div class="tab">
+                        <button class="tablinks" onclick="openPedido(event, 'pedido')">Pedido</button>
+                        <button class="tablinks" onclick="openPedido(event, 'pedidoitens')">Produtos</button>
                     </div>
-                    <div>
-                        <label for="situacaopedido">Situacao:</label>
-                        <input name="situacaopedido" type="text" id="situacaopedido" placeholder="situacao do pedido">
+                    <div class="tabcontent" id="pedido">
+                        <label for="idpedido">Pedido N°</label>
+                        <input type="text" id="idpedido" readonly class="idpedido">                    
+                        <div class="divpedido">
+                            <label class="label" for="datapedido">Data:</label>
+                            <input type="date" id="datapedido" />
+                            
+                            <label class="label" for="situacaopedido">Situacao:</label>
+                            <!--<input name="situacaopedido" type="text" id="situacaopedido" placeholder="situacao do pedido">-->
+                            <select name="situacaopedido" id="situacaopedido">
+                                <option value="00">Cancelado</option>
+                                <option value="10">Emitido</option>
+                                <option value="20">Pago</option>
+                                <option value="30">Enviado</option>
+                                <option value="40">Entregue</option>
+                                <option value="50">Concluído</option>
+                            </select>
+                            
+                        </div>
+                        <div style="border: 1px solid; display: flex; flex-direction: row; justify-content: center; padding: 10px;">
+                            <label class="label" for="observacaopedido">Observação:</label>
+                            <textarea name="observacaopedido" id="observacaopedido" cols="60" rows="2"></textarea>
+                        </div>
+                        <div style="border: 1px solid;">
+                            <label class="label" for="selectformapagamento">Forma de Pagamento:</label>
+                            <select name="selectformapagamento" id="selectformapagamento"></select>
+                            
+                            <label class="label" for="selectprazopagamento">Prazo de Pagamento:</label>
+                            <select name="selectprazopagamento" id="selectprazopagamento"></select>
+                            
+                            <label class="label" for="selecttipofrete">Tipo de Frete:</label>
+                            <select name="selecttipofrete" id="selecttipofrete"></select>
+                        </div>
+                        <div class="divpedido">
+                            <label class="label" for="codigocliente">Cliente:</label>
+                            <input name="codigocliente" type="number" id="codigocliente" style="width: 50px;" maxlength="4">
+                            <input name="nomecliente" type="text" id="nomecliente">
+                            <button class="btn" onclick=""><i class="fa-solid fa-magnifying-glass"></i></button>
+                        </div>                 
+                        <button class="btnacao" onclick="gravarPedido()">Gravar</button>
+                        <button class="btnexcluir">Cancelar</button>
                     </div>
-                    <div>
-                        <label for="observacaopedido">Observação:</label>
-                        <textarea name="observacaopedido" id="observacaopedido" cols="45" rows="3"></textarea>
+
+                    <div class="tabcontent" id="pedidoitens">
+                        <div class="divpedidoitem">
+                            <label for="idproduto">Produto</label>
+                            <input type="number" name="idproduto" id="idproduto" class="idproduto">
+                            
+                        </div>
+                        <input type="text" placeholder="quantidade produto">
                     </div>
-                    <div>
-                        <label for="selectformapagamento">Forma de Pagamento:</label>
-                        <select name="selectformapagamento" id="selectformapagamento"></select>
-                    </div>
-                    <div>                        
-                        <label for="selectprazopagamento">Prazo de Pagamento:</label>
-                        <select name="selectprazopagamento" id="selectprazopagamento"></select>
-                    </div>
-                    <div>                        
-                        <label for="selecttipofrete">Tipo de Frete:</label>
-                        <select name="selecttipofrete" id="selecttipofrete"></select>
-                    </div>
-                    <div>
-                        <label for="codigocliente">Cliente:</label>
-                        <input name="codigocliente" type="text" id="codigocliente">
-                        <input name="nomecliente" type="text" id="nomecliente">
-                    </div>                    
-                    <button class="btnacao" onclick="gravarPedido()">Gravar</button>
+
                 </form>
             </div>
         </div>
@@ -200,6 +227,7 @@
     <script src="src/js/formapagamento.js"></script>
     <script src="src/js/prazopagamento.js"></script>
     <script src="src/js/tipofrete.js"></script>
+    <script src="src/js/cadclientes.js"></script>
     <script>
     async function start()
     {

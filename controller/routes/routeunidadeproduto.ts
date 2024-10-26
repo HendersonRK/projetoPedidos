@@ -30,6 +30,7 @@ routeUnidadeProduto.get('/unidadeproduto/buscapornome/:nome', async (req: Reques
 {    
     let nomeUnidade = String(req.params.nome)
     let unidade = await UnidadeProduto.listaUmPorNome(nomeUnidade)
+    
     if (unidade != null)
     {
         return res.status(200).json([unidade])

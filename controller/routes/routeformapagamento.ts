@@ -91,3 +91,17 @@ routeFormaPagamento.put('/formapagamento/:id', async (req: Request, res: Respons
     let erro = {"id" : id, "erro" : "Erro ao editar Forma de Pagamento!"}
     return res.status(400).json(erro);
 });
+
+routeFormaPagamento.get('/formapagamento/buscapornome/:nome', async (req: Request, res: Response): Promise<Response> => 
+{
+    let nomeFormaPagamento = String(req.params.nome)
+    let formaPagamento = await FormaPagamento.listaUmPorNome(nomeFormaPagamento)
+
+    if (formaPagamento != null)
+    {
+        return res.status(200).json([formaPagamento])
+    }
+
+    let erro = {"Forma Pagamento": " ", "erro" : "Forma de pagamento não encontrada!"}
+    return res.status(400).json(erro)
+})

@@ -69,24 +69,6 @@ async function gravarUnidadeProduto()
     }
 }
 
-/*async function listarUnidadeProduto() 
-{
-    const myHeaders = new Headers()
-    myHeaders.append("Content-Type", "application/json")
-    myHeaders.append('Authorization', authorization)
-
-    const options ={
-        headers: myHeaders,
-        method: 'GET',
-        redirect: 'follow'
-    };
-
-    let result = await fetch (apiUrlUnidade+'/unidadeproduto', options)
-    let unidadesProdutos = await result.json()
-    
-    return unidadesProdutos
-}*/
-
 async function listarUnidadeProduto(buscaUnidade= '') 
 {   
     let url = buscaUnidade === '' ? '/unidadeproduto' : '/unidadeproduto/buscapornome/'+buscaUnidade
@@ -104,17 +86,12 @@ async function listarUnidadeProduto(buscaUnidade= '')
     let result = await fetch (apiUrlUnidade+url, options)
     let unidadesProdutos = await result.json()
     
-    console.log (unidadesProdutos)
-
     return unidadesProdutos  
 }
 
 async function montaTabela(buscaUnidade)
 {
     let resultado = await listarUnidadeProduto(buscaUnidade)
-    console.log (resultado)
-    console.log(resultado.length)
-
     let html = ''  
 
     for (let index = 0; index < resultado.length; index++)
@@ -131,7 +108,6 @@ async function montaTabela(buscaUnidade)
             <td>${unidadeProduto.descricaouniproduto}</td>
         </tr>`
     }
-    console.log(html)
     document.getElementById('tbody-unidadeprodutos').innerHTML = html
 }
 
@@ -207,11 +183,7 @@ async function editarUnidadeProduto(id)
 function buscaUnidadePorNome() 
 {
     let nomeBusca = document.getElementById('campopesquisa').value
-    //console.log(nomeBusca)
     montaTabela(nomeBusca)
-    //console.log(buscaUnidade)
-    //document.getElementById('tbody-unidadeprodutos').innerHTML = buscaUnidade
-    //window.location.reload()
 }
 
 /*async function geraPdf(html) 

@@ -6,9 +6,13 @@ ORDER BY a.id_produto;
 
 ALTER TABLE pedido ADD COLUMN datapedido Date;
 
-SELECT a.id_pedido, b.nome, a.datapedido, a.situacao
+SELECT a.id_pedido, b.nome, a.datapedido, a.situacao, c.prazopagamento, d.descricaofrmpagamento
 FROM pedido a 
 LEFT JOIN cliente b ON a.id_cliente = b.id_cliente
+LEFT JOIN prazopagamento c ON a.id_prazopagamento = c.id_prazopagamento
+LEFT JOIN formapagamento d ON a.id_formapagamento = d.id_frmpagamento
 ORDER BY a.id_pedido;
 
 ALTER TABLE pedido DROP COLUMN data_pedido;
+
+TRUNCATE TABLE pedido RESTART IDENTITY CASCADE (apaga todos os registros da tabela e reicinia o id)

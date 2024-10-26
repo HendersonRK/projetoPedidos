@@ -1,17 +1,16 @@
 import { Router, Request, Response } from "express";
 import { Cliente } from "../model/cliente";
-import { client } from "../database";
 
 export const routeCliente = Router()
 
-//retorna os tipos de frete cadastrados no banco de dados
+//retorna os clientes cadastrados no banco de dados
 routeCliente.get('/cliente', async (req: Request, res: Response): Promise<Response> => 
 {
     let clientes = await Cliente.listarTodas()   
     return res.status(200).json(clientes);
 });
 
-//retorna um tipo de frete do bancdo de dados
+//retorna um cliente do bancdo de dados
 routeCliente.get('/cliente/:codigo', async (req: Request, res: Response): Promise<Response> => 
 {
     let id = Number(req.params.codigo)
@@ -26,7 +25,7 @@ routeCliente.get('/cliente/:codigo', async (req: Request, res: Response): Promis
     return res.status(400).json(erro)
 });
 
-//grava tipo de frete no banco de dados
+//grava cliente no banco de dados
 routeCliente.post('/cliente', async (req: Request, res: Response): Promise<Response> => 
 {
     let cliente = new Cliente()
@@ -54,7 +53,7 @@ routeCliente.post('/cliente', async (req: Request, res: Response): Promise<Respo
     return res.status(400).json(erro)
 });
 
-//deleta tipo de frete do banco de dados
+//deleta cliente do banco de dados
 routeCliente.delete('/cliente/:id', async (req: Request, res: Response): Promise<Response> => 
 {
     let id = Number(req.params.id);  
@@ -102,3 +101,17 @@ routeCliente.put('/cliente/:id', async (req: Request, res: Response): Promise<Re
     let erro = {"id" : id, "erro" : "Erro ao editar Cliente, verifique os dados digitados!"}
     return res.status(400).json(erro);
 });
+
+routeCliente.get('/cliente/buscapornome/:nomecliente', async (req: Request, res: Response): Promise<Response> => 
+{
+    let nomeCliente = String(req.params.nomecliente)
+    let cliente = await Cliente.listaUmPorNome(nomeCliente)
+
+    if(cliente != null)
+    {
+        return res.status(200).json([cliente])
+    }
+
+    let erro = {"Cliente": "", "erro" : "Cliente não encontrado"}
+    return res.status(400).json(erro)
+})

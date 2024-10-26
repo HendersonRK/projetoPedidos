@@ -1,0 +1,19 @@
+.codigocliente,
+.idproduto {
+    width: 50px;
+}
+
+.idpedido {
+    width: 70px;
+}
+
+.divpedidoitem {
+    display: flex;
+    flex-direction: column;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}

@@ -111,8 +111,10 @@ async function gravarUsuario()
     }
 }
 
-async function listarUsuarios() 
+async function listarUsuarios(buscaUsuario= '') 
 {
+    let url = buscaUsuario === '' ? '/usuario' : '/usuario/buscapornome/'+buscaUsuario
+
     const myHeaders = new Headers()
     myHeaders.append("Content-Type", "application/json")
     myHeaders.append('Authorization', authorization)
@@ -123,13 +125,20 @@ async function listarUsuarios()
         redirect: 'follow'
     };
     
-    let result = await fetch (apiUrl+'/usuario', options);
+    let result = await fetch (apiUrl+url, options);
     let usuarios = await result.json();
+    
+    return usuarios
+}
+
+async function montaTabelaUsuario(buscaUsuario) 
+{
+    let resultado = await listarUsuarios(buscaUsuario)
     let html = ''
 
-    for (let index = 0; index < usuarios.length; index++)
+    for (let index = 0; index < resultado.length; index++)
     {        
-        let usuario = usuarios[index];      
+        let usuario = resultado[index];      
         let btnExlcuir = `<button class="btnexcluir" onclick="excluirUsuario(${usuario.id_usuario})">Excluir</button>`;
         let btnEditar = `<button class="btneditar" onclick="editarUsuario(${usuario.id_usuario})">Editar</button>`;
 
@@ -197,4 +206,10 @@ async function carregarUsuario(id)
 async function editarUsuario(id) 
 {
     openModal(true, id)   
+}
+
+function buscaUsuarioPorNome()
+{
+    let nomeBusca = document.getElementById('campopesquisa').value
+    montaTabelaUsuario(nomeBusca)
 }

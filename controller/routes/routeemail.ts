@@ -3,7 +3,8 @@ import { enviarEmail } from "../model/email"
 
 export const routeEmail = Router()
 //emails
-routeEmail.get ('/email', async (req: Request, res: Response) =>
+routeEmail.get ('/email/:endereco', async (req: Request, res: Response) =>
 {
-    res.json(await enviarEmail('henderson.kettermann@gmail.com'))
+    let enderecoEmail = String(req.params.endereco)
+    res.json(await enviarEmail(enderecoEmail))
 })

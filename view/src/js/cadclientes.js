@@ -10,7 +10,7 @@ function pressEnter()
     }
 }
 
-function openModal(editar = false, id)
+function openModalClientes(editar = false, id)
 {
     modalCadCliente.classList.add('active')
 
@@ -79,8 +79,10 @@ async function gravarCliente()
     }
 }
 
-async function listarClientes() 
+async function listarClientes(buscaCliente= '') 
 {
+    let url = buscaCliente === '' ? '/cliente' : '/cliente/buscapornome/'+buscaCliente
+
     const myHeaders = new Headers()
     myHeaders.append("Content-Type", "application/json")
     myHeaders.append('Authorization', authorization)
@@ -91,16 +93,16 @@ async function listarClientes()
         redirect: 'follow'
     };
 
-    let result = await fetch (apiUrlCadCliente+'/cliente', options)
+    let result = await fetch (apiUrlCadCliente+url, options)
     let clientes = await result.json()
     
     return clientes
 }
 
-async function motaTabelaClientes() 
+async function motaTabelaClientes(buscaCliente) 
 {
     let html = ''
-    let resultados = await listarClientes()
+    let resultados = await listarClientes(buscaCliente)
 
     for (let index = 0; index < resultados.length; index++)
     {
@@ -123,20 +125,6 @@ async function motaTabelaClientes()
     }
     document.getElementById('tbody-clientes').innerHTML = html
 }
-
-/*async function montaSelectGrupoProduto() 
-{
-    let resultado = await listarGrupoProduto()
-    let html = ''
-
-    for (let index = 0; index < resultado.length; index++)
-    {
-        let grupoProduto = resultado[index]
-        html += `<option value="${grupoProduto.id_grupoproduto}">${grupoProduto.descricaogrupoproduto}</option>`
-    }
-
-    document.getElementById('selectgrupoproduto').innerHTML = html
-}*/
 
 async function excluirCliente(id) 
 {
@@ -195,7 +183,7 @@ async function carregaCliente(id)
 
 async function editarCliente(id) 
 {
-    openModal(true, id)   
+    openModalClientes(true, id)   
 }
 
 async function carregaEstados() 
@@ -231,4 +219,10 @@ async function carregaCidades()
         html += `<option value="${municipio.nome}">${municipio.nome}</option>`
     }
     document.getElementById('selectcidade').innerHTML = html;
+}
+
+async function buscaClientePorNome()
+{
+    let nomeBusca = document.getElementById('campopesquisa').value
+    motaTabelaClientes(nomeBusca)    
 }

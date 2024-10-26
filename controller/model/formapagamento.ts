@@ -87,4 +87,19 @@ export class FormaPagamento
         }
         return null        
     }
+
+    static async listaUmPorNome(nomeBusca: any): Promise<FormaPagamento | null> 
+    {
+        let nomeFormaPagamento = "%"+nomeBusca+"%"
+        let sql = `SELECT * FROM formapagamento WHERE descricaofrmpagamento ILIKE $1 LIMIT 1;`
+        let resultado = await dbQuery(sql, [nomeFormaPagamento])
+
+        if (resultado.length > 0)
+        {
+            let newFormaPagamento = new FormaPagamento()
+            Object.assign(newFormaPagamento, resultado[0])
+            return newFormaPagamento
+        }
+        return null
+    }
 }

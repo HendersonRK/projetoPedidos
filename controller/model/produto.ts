@@ -103,4 +103,20 @@ export class Produto
 
         return null;     
     }
+
+    static async listaUmPorNome(nomeProduto: any): Promise<Produto | null>
+    {
+        let buscaProduto = "%"+nomeProduto+"%"
+        let sql = 'SELECT * FROM produto WHERE nomeproduto ILIKE $1 LIMIT 1'
+        let resultado = await dbQuery(sql, [buscaProduto])
+
+        if (resultado.length > 0)
+        {
+            let newProduto = new Produto()
+            Object.assign(newProduto, resultado[0])
+            return newProduto
+        }
+
+        return null
+    }
 }

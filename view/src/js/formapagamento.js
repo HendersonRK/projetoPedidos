@@ -69,8 +69,10 @@ async function gravaFrmPagamento()
     }
 }
 
-async function listarFrmPagamento() 
+async function listarFrmPagamento(buscaFormaPagamneto='') 
 {
+    let url = buscaFormaPagamneto === '' ? '/formapagamento' : '/formapagamento/buscapornome/'+buscaFormaPagamneto
+
     const myHeaders = new Headers()
     myHeaders.append("Content-Type", "application/json")
     myHeaders.append('Authorization', authorization)
@@ -81,17 +83,16 @@ async function listarFrmPagamento()
         redirect: 'follow'
     };
     
-    let result = await fetch (apiUrl+'/formapagamento', options);
+    let result = await fetch (apiUrl+url, options);
     let formasPagamento = await result.json();
     
     return formasPagamento    
 }
 
-async function montaTabelaFormaPagamento() 
+async function montaTabelaFormaPagamento(buscaFormaPagamneto) 
 { 
     let html = ''
-    let resultado = await listarFrmPagamento()
-    
+    let resultado = await listarFrmPagamento(buscaFormaPagamneto)
     for (let index = 0; index < resultado.length; index++)
     {        
         let formaPagamento = resultado[index];      
@@ -175,5 +176,11 @@ async function carregaFormaPagamento(id)
 
 async function editarFormaPagamento(id) 
 {
-    openModal(true, id)   
+    openModalFormaPagamento(true, id)   
+}
+
+function buscaFormaPagamentoPorNome() 
+{
+    let nomeBusca = document.getElementById('campopesquisa').value
+    montaTabelaFormaPagamento(nomeBusca)    
 }

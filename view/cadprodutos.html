@@ -134,6 +134,14 @@
                 <h2>Cadastro Produtos</h2>
                 <button class="btnacao" onclick="openModalProduto(false);">Incluir</button>
             </div>
+
+            <div class="pesquisa">
+                <div>
+                    <label for="campopesquisa">Pesquisa:</label>
+                    <input type="text" name="campopesquisa" id="campopesquisa">
+                    <button class="btnacao" onclick="buscaProdutoPorNome()">Busca</button>
+                </div>
+            </div>
             
             <div class="tabela">
                 <table>
@@ -192,7 +200,7 @@
         async function start()
         {
             await verificaLogin()
-            await listarProdutos() 
+            await montaTabelaProduto() 
             await montaSelectUnidadeProduto() 
             await montaSelectGrupoProduto()  
         }

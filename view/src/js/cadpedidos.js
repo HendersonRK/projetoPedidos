@@ -3,7 +3,30 @@ const apiUrlPedido = "http://localhost:3000"
 const modalPedido = document.querySelector('.modal-container')
 
 //funções 
-function openModal(editar = false, id)
+function openPedido(evt, abas) 
+{
+    var i, tabcontent, tablinks
+
+    //pega todos elementos com class tabcontent e esconde eles
+    tabcontent = document.getElementsByClassName('tabcontent')
+    for( index = 0; index < tabcontent.length; index++)
+    {   
+        tabcontent[index].style.display = "none"
+    }
+
+    //pega todos elementos com class tablinks e remove a class active
+    tablinks = document.getElementsByClassName('tablinks')
+    for( index = 0; index < tablinks.length; index++)
+    {   
+        tablinks[index].className = tablinks[index].className.replace(" active", "")
+    }
+    
+    //mostra a aba selecionada
+    document.getElementById(abas).style.display = "block"
+    evt.currentTarget.className += " active"
+}
+
+function openModalPedidos(editar = false, id)
 {
     modalPedido.classList.add('active')
 
@@ -14,7 +37,7 @@ function openModal(editar = false, id)
             modalPedido.classList.remove('active')
         }
     }
-    if (editar)
+    if (editar = true)
     {
         carregarPedido(id);
         editar == false
@@ -28,6 +51,7 @@ function openModal(editar = false, id)
         document.getElementById('nomecliente').value = ''
     }
 }
+
 
 //funções de comunicação com back end.
 async function gravarPedido() 
@@ -100,8 +124,9 @@ async function listarPedidos()
     for (let index = 0; index < pedidos.length; index++)
     {        
         let pedido = pedidos[index];      
-        let btnExlcuir = `<button class="btnexcluir" onclick="excluirPedido(${pedido.id_pedido})">Excluir</button>`;
-        let btnEditar = `<button class="btneditar" onclick="editarPedido(${pedido.id_pedido})">Editar</button>`;
+        let btnExlcuir = `<button class="btnexcluir" onclick="excluirPedido(${pedido.id_pedido})">Excluir</button>`
+        let btnEditar = `<button class="btneditar" onclick="editarPedido(${pedido.id_pedido})">Editar</button>`
+        let btnAddItens = `<button class="btn" onclick="">Add Itens</button>`
         
         var dataInput = pedido.datapedido
         data = new Date (dataInput)
@@ -112,6 +137,7 @@ async function listarPedidos()
         <tr>
             <td>${btnEditar}</td>
             <td>${btnExlcuir}</td>
+            <td>${btnAddItens}</td>
             <td>${pedido.id_pedido}</td>
             <td>${pedido.nome}</td>
             <td>${dataPedidoFormatada}</td>
@@ -163,7 +189,7 @@ async function carregarPedido(id)
             redirect: 'follow'
         };
 
-        let result = await fetch(apiUrlPedidol+"/produto/"+id, options)
+        let result = await fetch(apiUrlPedido+"/pedido/"+id, options)
         let pedido = await result.json();
 
         document.getElementById('idpedido').value = pedido.id_pedido
@@ -179,5 +205,5 @@ async function carregarPedido(id)
 
 async function editarPedido(id) 
 {
-    openModal(true, id)   
+    openModalPedidos(true, id)   
 }

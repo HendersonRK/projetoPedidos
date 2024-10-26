@@ -5,7 +5,7 @@ import { routeFormaPagamento } from './routes/routeformapagamento';
 import { routeUnidadeProduto } from './routes/routeunidadeproduto';
 import { routeGrupoProduto } from './routes/routegrupoproduto';
 import { routeProduto } from './routes/routeproduto';
-import { routeUsuario } from './routes/reouteusuario';
+import { routeUsuario } from './routes/routeusuario';
 import { routeConfiguracao } from './routes/routeconfiguracaoemail';
 import { routeEmail } from './routes/routeemail';
 import { routeTipoFrete } from './routes/routetipofrete';

@@ -134,14 +134,15 @@
                 <h2>Cadastro de Usuarios</h2>
                 <button class="btnacao" onclick="openModal();">Incluir</button>
             </div>
-            <!--
-                <div class="cadastrofrmpagamento">
-                    <p class="labelaviso"></p>
-                    <label for="descricao">Descrição:</label>
-                    <input name="descricaofrmpagamento" type="text" id="descricaofrmpagamento" placeholder="descrição do pagamento">
-                    <button onclick="gravaFrmPagamento();">Gravar</button>
-                </div>                
-            --> 
+
+            <div class="pesquisa">
+                <div>
+                    <label for="campopesquisa">Pesquisa:</label>
+                    <input type="text" name="campopesquisa" id="campopesquisa">
+                    <button class="btnacao" onclick="buscaUsuarioPorNome()">Busca</button>
+                </div>
+            </div>
+
             <div class="tabela">
                 <table>
                     <thead>
@@ -191,7 +192,7 @@
         async function start()
         {
             verificaLogin()
-            listarUsuarios()    
+            montaTabelaUsuario()    
         }
         start()             
     </script>

@@ -75,8 +75,9 @@ async function gravarProduto()
     }
 }
 
-async function listarProdutos() 
+async function listarProdutos(buscaProduto='') 
 {
+    let url = buscaProduto === '' ? '/produto' : '/produto/buscapornome/'+buscaProduto
     const myHeaders = new Headers()
     myHeaders.append("Content-Type", "application/json")
     myHeaders.append('Authorization', authorization)
@@ -87,13 +88,20 @@ async function listarProdutos()
         redirect: 'follow'
     };
     
-    let result = await fetch (apiUrl+'/produto', options);
-    let produtos = await result.json();
+    let result = await fetch (apiUrl+url, options)
+    let produtos = await result.json()
+
+    return produtos    
+}
+
+async function montaTabelaProduto(buscaProduto)
+{
+    let resultado = await listarProdutos(buscaProduto)
     let html = ''
 
-    for (let index = 0; index < produtos.length; index++)
+    for (let index = 0; index < resultado.length; index++)
     {        
-        let produto = produtos[index];      
+        let produto = resultado[index];      
         let btnExlcuir = `<button class="btnexcluir" onclick="excluirProduto(${produto.id_produto})">Excluir</button>`;
         let btnEditar = `<button class="btneditar" onclick="editarProduto(${produto.id_produto})">Editar</button>`;
 
@@ -169,3 +177,8 @@ async function editarProduto(id)
     openModalProduto(true, id)   
 }
 
+async function buscaProdutoPorNome() 
+{
+    let nomeBusca = document.getElementById('campopesquisa').value
+    montaTabelaProduto(nomeBusca)    
+}

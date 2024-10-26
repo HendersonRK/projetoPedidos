@@ -77,6 +77,15 @@ tr:hover {
     cursor: pointer;
 }
 
+.btn {
+    padding: 3px 10px 3px 10px;
+    background-color: var(--button-add);
+    border: none;
+    border-radius: var(--default-border-radius);
+    color: var(--text-dark);
+    cursor: pointer;
+}
+
 .modal-container {
     width: 100vw;
     height: 100vh;
@@ -88,6 +97,12 @@ tr:hover {
     z-index: 999;
     align-items: center;
     justify-content: center;
+}
+
+
+.label{
+    width: 120px;
+    display: inline-block;
 }
 
 .usuario {
@@ -129,6 +144,55 @@ tr:hover {
 
 .active .modal {
     animation: modal .5s;
+}
+input {
+    padding: 2px 4px 2px 4px;
+}
+
+button {
+    border-radius: 4px;
+}
+
+.pesquisa {
+    display: flex;
+    justify-content: center;
+}
+
+.divpedido {
+    border: 1px solid;
+    text-align: center;
+    padding: 10px;    
+}
+
+.tab {
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+}
+
+.tab button{
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.5s;
+}
+
+.tab button:hover {
+    background-color: #ddd;
+}
+
+.tab button.active {
+    background-color: #ccc;
+}
+
+.tabcontent {
+    display: none;
+    padding: 6px 12px;
+    border: 1pc solid #ccc;
+    border-top: none;
 }
 
 @keyframes modal {

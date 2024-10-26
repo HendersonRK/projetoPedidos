@@ -102,3 +102,17 @@ routeProduto.put('/produto/:codigo', async (req: Request, res: Response): Promis
     let erro = {"Código: " : id, "erro" : "Erro ao editar Produto!"}
     return res.status(400).json(erro);
 });
+
+routeProduto.get('/produto/buscapornome/:nome', async (req: Request, res: Response): Promise<Response> => 
+{ 
+    let nomeProduto = String (req.params.nome)
+    let produto = await Produto.listaUmPorNome(nomeProduto)
+    
+    if (produto != null)
+    {
+        return res.status(200).json([produto])
+    }
+
+    let erro = {"Produto" : nomeProduto, "erro" : "Produto não encontrado!"}
+    return res.status(400).json()
+})

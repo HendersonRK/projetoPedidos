@@ -134,7 +134,15 @@
         <div class="divmain">
             <div class="mainheader">
                 <h2>Cadastro de Clientes</h2>
-                <button class="btnacao" onclick="openModal(null);">Incluir</button>
+                <button class="btnacao" onclick="openModalClientes(null);">Incluir</button>
+            </div>
+
+            <div class="pesquisa">
+                <div>
+                    <label for="campopesquisa">Pesquisa:</label>
+                    <input type="text" name="campopesquisa" id="campopesquisa">
+                    <button class="btnacao" onclick="buscaClientePorNome()">Busca</button>
+                </div>
             </div>
             
             <div class="tabela">
@@ -161,7 +169,7 @@
                 <form onsubmit="return false">
                     <input type="text" id="idcliente" style="display: none;">
                     <div>
-                        <label for="nomecliente">Nome:</label>
+                        <label class="labelnomecliente" for="nomecliente">Nome:</label>
                         <input name="nomecliente" type="text" id="nomecliente" placeholder="nome do cliente">
                     </div>
                     <div>

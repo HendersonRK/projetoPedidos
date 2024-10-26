@@ -4,6 +4,9 @@
 @import url(index.css);
 @import url(sidebar.css);
 @import url(variables.css);
+@import url(pedido.css);
+@import url(cadclientes.css);
+@import url(unidadeproduto.css);
 
 * {
     margin: 0;

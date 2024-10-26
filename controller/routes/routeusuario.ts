@@ -31,9 +31,10 @@ routeUsuario.get('/usuario/buscapornome/:nome', async (req: Request, res: Respon
 {    
     let nomeUsuario = String(req.params.nome)
     let usuario = await Usuario.listaUmPorNome(nomeUsuario)
+    
     if (usuario != null)
     {
-        return res.status(200).json(usuario)
+        return res.status(200).json([usuario])
     }
 
     let erro = {"Usuario": " ", "erro" : "Usuario não encontrado"}

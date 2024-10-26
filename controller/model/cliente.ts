@@ -61,6 +61,22 @@ export class Cliente
         return null;
     }
 
+    static async listaUmPorNome(nomeCliente: any): Promise<Cliente | null>
+    {
+        let cliente = "%"+nomeCliente+"%"
+        let sql = `SELECT * FROM cliente WHERE nome ILIKE $1 LIMIT 1;`
+        let resultado = await dbQuery(sql, [cliente])
+
+        if (resultado.length > 0)
+        {
+            let newCliente = new Cliente()
+            Object.assign(newCliente, resultado[0])
+            return newCliente
+        }
+
+        return null
+    }
+
     public async insert():Promise<Cliente | null>
     {
         let sql = `INSERT INTO cliente (nome, cpf, siglauf, cidade, telefone, email) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id_cliente;`
