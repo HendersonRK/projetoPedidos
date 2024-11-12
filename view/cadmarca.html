@@ -134,14 +134,21 @@
     </nav>
 
     <main class="main">
-        <h1>Dashboard Admin</h1>
-    </main>
 
-    
-    
+    </main> 
+
 </body>
     <script src="src/js/style.js"></script>
     <script src="src/js/login.js"></script>
-   
-    <script>verificaLogin()</script>
+
+    <script>
+    async function start()
+    {
+        verificaLogin()
+        motaTabelaClientes()
+        await carregaEstados()
+        await carregaCidades()
+    }
+    start();
+</script> 
 </html>

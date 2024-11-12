@@ -1,18 +1,33 @@
-export const apiUrl = "http://localhost:3000"
+const apiUrl = "http://localhost:3000"
 
-import { listarUnidadeProduto } from "./unidadeproduto"
-
-async function montaSelectUnidadeProduto()
+async function myGet(url, method) 
 {
-    let resultado = await listarUnidadeProduto()
+    const myHeaders = new Headers()
+    myHeaders.append("Content-Type", "application/json")
+    myHeaders.append('Authorization', authorization)
 
-    let html = ''  
+    const options = {
+        headers: myHeaders,
+        method: method,
+        redirect: "follow"
+    }    
 
-    for (let index = 0; index < resultado.length; index++)
-    {
-        let unidadeProduto = resultado[index]
-        
-        html += `<option value="${resultado.id_unidadeproduto}>${resultado.descricaouniproduto}</option>"`
+    let resultado = await fetch(apiUrl+url, options)
+    return await resultado.json()
+}
+
+async function myPost(url, method, jacson) 
+{
+    const myHeaders = new Headers()
+    myHeaders.append("Content-Type", "application/json")
+    
+    const options = {
+        method: method,
+        body: JSON.stringify(jacson),
+        headers: myHeaders,
+        redirect: "follow"
     }
-    document.getElementById('unidadeproduto').innerHTML = html
+
+    let resultado = await fetch(apiUrl+url, options)
+    return await resultado.json()
 }

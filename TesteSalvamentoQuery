@@ -16,3 +16,14 @@ ORDER BY a.id_pedido;
 ALTER TABLE pedido DROP COLUMN data_pedido;
 
 TRUNCATE TABLE pedido RESTART IDENTITY CASCADE (apaga todos os registros da tabela e reicinia o id)
+
+SELECT b.id_pedido, c.nome, b.datapedido, b.situacao
+FROM pedidoitem a 
+LEFT JOIN pedido b ON a.id_pedido = b.id_pedido
+LEFT JOIN cliente c ON b.id_cliente = c.id_cliente
+ORDER BY b.id_pedido;
+
+SELECT b.nomeproduto, a.quantidade, a.valorunitario, a.valortotal
+FROM pedidoitem a
+LEFT JOIN produto b ON a.id_produto = b.id_produto
+ORDER BY id_pedidoitem

@@ -2,12 +2,12 @@ import { client, dbQuery } from '../database';
 
 export class Configuracoes
 {
-    id_configuracao:number = 0
-    hostname:string = ''
-    emailretorno:string = ''
-    porta:number = 0
-    emailusername:string = ''
-    emailpassword:string = ''
+    id_configuracao: number = 0
+    hostname: string = ''
+    emailretorno: string = ''
+    porta: number = 0
+    emailusername: string = ''
+    emailpassword: string = ''
 
 
     static async listarConfiguracoes():Promise<Configuracoes>
@@ -23,7 +23,7 @@ export class Configuracoes
 
     public async update():Promise<Configuracoes|null>
     {
-        let sql = `UPDATE configuracoes SET hostname = $1, emailretorno = $2, porta = $3, emailusername = $4, emailpassword = $5 WHERE id_unidadeproduto = 1;`;    
+        let sql = `UPDATE configuracoes SET hostname = $1, emailretorno = $2, porta = $3, emailusername = $4, emailpassword = $5 WHERE id_configuracao = 1 RETURNING id_configuracao;`;    
         let params = [this.hostname, this.emailretorno, this.porta, this.emailusername, this.emailpassword];
 
         let resultado = await dbQuery(sql,params);

@@ -11,11 +11,66 @@
     flex-direction: row;
 }
 
-.cadastrofrmpagamento {
-    margin-top: 4rem;
-    margin-bottom: 8rem;
+.label {
+    width: 120px;
+    display: inline-block;
 }
 
+.pesquisa {
+    display: flex;
+    justify-content: center;
+}
+
+.divpedido {
+    border: 1px solid;
+    text-align: center;
+    padding: 10px;
+}
+
+/*.cadastrofrmpagamento {
+    margin-top: 4rem;
+    margin-bottom: 8rem;
+}*/
+
+
+/*modal*/
+.modal-container {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: var(--modal-container-bg);
+    display: none;
+    z-index: 999;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px;
+    background-color: var(--modal-bg);
+    border-radius: 10px;
+    width: 50%;
+}
+
+.active {
+    display: flex;
+}
+
+.active .modal {
+    animation: modal 0.5s;
+}
+
+input {
+    padding: 2px 4px 2px 4px;
+}
+
+
+/*tabela*/
 table {
     margin-top: 3rem;
     border: 1px solid var(--table-border);
@@ -51,6 +106,12 @@ tr:hover {
     background-color: var(--table-tr-hover);
 }
 
+
+/*botoes*/
+button {
+    border-radius: 4px;
+}
+
 .btnexcluir {
     padding: 3px 10px 3px 10px;
     background-color: var(--button-cancel);
@@ -84,86 +145,11 @@ tr:hover {
     border-radius: var(--default-border-radius);
     color: var(--text-dark);
     cursor: pointer;
-}
-
-.modal-container {
-    width: 100vw;
-    height: 100vh;
-    position: fixed;
-    top: 0;
-    left: 0;
-    background-color: var(--modal-container-bg);
-    display: none;
-    z-index: 999;
-    align-items: center;
-    justify-content: center;
+    margin-left: 6px;
 }
 
 
-.label{
-    width: 120px;
-    display: inline-block;
-}
-
-.usuario {
-    display: flex;
-    flex-direction: column;    
-    margin-bottom: 2rem;
-}
-
-.usuario input {
-    width: 280px;
-    padding: 0px 50px 0px 10px;
-    line-height: 25px;
-}
-
-.senha{
-    position: relative;
-}
-
-.senha i {
-    position: absolute;
-    right: 5px;
-    top: 0.5rem;
-    cursor: pointer;
-}
-
-.modal {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 40px;
-    background-color: var(--modal-bg);
-    border-radius: 10px;
-    width: 50%;
-}
-
-.active {
-    display: flex;
-}
-
-.active .modal {
-    animation: modal .5s;
-}
-input {
-    padding: 2px 4px 2px 4px;
-}
-
-button {
-    border-radius: 4px;
-}
-
-.pesquisa {
-    display: flex;
-    justify-content: center;
-}
-
-.divpedido {
-    border: 1px solid;
-    text-align: center;
-    padding: 10px;    
-}
-
+/*abas*/
 .tab {
     overflow: hidden;
     border: 1px solid #ccc;
@@ -190,10 +176,11 @@ button {
 
 .tabcontent {
     display: none;
-    padding: 6px 12px;
+    padding: 6px 6px;
     border: 1pc solid #ccc;
     border-top: none;
 }
+
 
 @keyframes modal {
     from {

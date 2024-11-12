@@ -1,17 +1,17 @@
 //declarações de constantes e variaveis
-const apiUrl = "http://localhost:3000"
-const modal = document.querySelector('.modal-container')
+const apiUrlProduto = "http://localhost:3000"
+const modalProduto = document.querySelector('.modal-container')
 
 //funções 
 function openModalProduto (editar = false, id)
 {
-    modal.classList.add('active')
+    modalProduto.classList.add('active')
 
-    modal.onclick = e => 
+    modalProduto.onclick = e => 
     {
         if (e.target.className.indexOf('modal-container') !== -1)
         {
-            modal.classList.remove('active')
+            modalProduto.classList.remove('active')
         }
     }
     if (editar == true)
@@ -61,7 +61,7 @@ async function gravarProduto()
         redirect: "follow"
     }; 
 
-    let result = await fetch (apiUrl+url, options);
+    let result = await fetch (apiUrlProduto+url, options);
     let produtoResult = await result.json();
 
     if (produtoResult.nomeproduto)
@@ -88,7 +88,7 @@ async function listarProdutos(buscaProduto='')
         redirect: 'follow'
     };
     
-    let result = await fetch (apiUrl+url, options)
+    let result = await fetch (apiUrlProduto+url, options)
     let produtos = await result.json()
 
     return produtos    
@@ -132,7 +132,7 @@ async function excluirProduto(id)
             redirect: 'follow'
         };
 
-        let result = await fetch(apiUrl+"/produto/"+id, options)
+        let result = await fetch(apiUrlProduto+"/produto/"+id, options)
         let json = await result.json();
 
         if(json.OK === true)
@@ -160,7 +160,7 @@ async function carregarProduto(id)
             redirect: 'follow'
         };
 
-        let result = await fetch(apiUrl+"/produto/"+id, options)
+        let result = await fetch(apiUrlProduto+"/produto/"+id, options)
         let produto = await result.json();
 
         document.getElementById('idproduto').value = produto.id_produto
@@ -181,4 +181,54 @@ async function buscaProdutoPorNome()
 {
     let nomeBusca = document.getElementById('campopesquisa').value
     montaTabelaProduto(nomeBusca)    
+}
+
+async function buscarProduto() 
+{
+    const buscaIdProduto = document.getElementById('idprodutopedido').value
+    const buscaNomeProduto = document.getElementById('nomeprodutopedido').value
+
+    const myHeaders = new Headers()
+        myHeaders.append("Content-Type", "application/json")
+        myHeaders.append('Authorization', authorization)
+
+    const options ={
+        headers: myHeaders,
+        method: 'GET',
+        redirect: 'follow'
+    };
+    
+    if(buscaIdProduto != '' && buscaNomeProduto == '')
+    {//busca por ID produto
+        let result = await fetch (apiUrlProduto+'/produto/'+buscaIdProduto, options);
+        let produto = await result.json()
+
+            if (produto.id_produto == undefined)
+            {
+                alert('Produto não encontrado, verifique os dados digitados!')
+            }
+            else
+            {
+                document.getElementById('nomeprodutopedido').value = produto.nomeproduto
+            }   
+    }
+    else if (buscaIdProduto == '' && buscaNomeProduto != '')
+    {//Busca por nome produto
+        let result = await fetch (apiUrlProduto+'/produto/buscapornome/'+buscaNomeProduto, options);
+        let cliente = await result.json()
+
+            if (cliente.length > 0)
+            {
+                document.getElementById('nomeprodutopedido').value = produto[0].nomeproduto
+                document.getElementById('idprodutopedido').value = produto[0].id_produto         
+            }
+            else
+            {
+                alert('Produto não encontrado, verifique os dados digitados!')
+            }
+    } 
+    else 
+    {
+        alert('ATENÇÃO, insira o código ou o nome do produto para continuar!')
+    }
 }

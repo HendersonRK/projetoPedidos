@@ -1,7 +1,7 @@
 import { Configuracoes } from "./configuracoes"
 import * as nodemailer from 'nodemailer'
 
-export async function enviarEmail(destinatario:string) 
+export async function enviarEmail(destinatario:string, bodyEmail:string) 
 {
     let configuracaoEmail = Configuracoes.listarConfiguracoes()
 
@@ -18,9 +18,10 @@ export async function enviarEmail(destinatario:string)
         from: (await configuracaoEmail).emailretorno,
         to: destinatario,
         subject: 'Teste email com API e configurações no banco de dados!',
-        html:'<h1>teste de email</h1>'
+        html: bodyEmail
     }
-
+    console.log(emailConfig)
+    console.log(mailOptions)
     let transporter = nodemailer.createTransport(emailConfig)
     return await transporter.sendMail(mailOptions)
 }

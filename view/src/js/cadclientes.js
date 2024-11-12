@@ -51,8 +51,6 @@ async function gravarCliente()
         "telefonecliente" : document.getElementById('telefonecliente').value,
         "emailcliente" : document.getElementById('emailcliente').value
     }
-    
-    console.log(cliente)
 
     const myHeaders = new Headers()
     myHeaders.append("Content-Type", "application/json")
@@ -225,4 +223,55 @@ async function buscaClientePorNome()
 {
     let nomeBusca = document.getElementById('campopesquisa').value
     motaTabelaClientes(nomeBusca)    
+}
+
+async function buscarCliente() 
+{
+    const buscaIdCliente = document.getElementById('codigocliente').value
+    const buscaNomeCliente = document.getElementById('nomecliente').value
+
+    console.log(buscaNomeCliente)
+    const myHeaders = new Headers()
+        myHeaders.append("Content-Type", "application/json")
+        myHeaders.append('Authorization', authorization)
+
+    const options ={
+        headers: myHeaders,
+        method: 'GET',
+        redirect: 'follow'
+    };
+    
+    if(buscaIdCliente != '' && buscaNomeCliente == '')
+    {//busca por ID Cliente
+        let result = await fetch (apiUrlPedido+'/cliente/'+buscaIdCliente, options);
+        let cliente = await result.json()
+
+            if (cliente.id_cliente == undefined)
+            {
+                alert('Cliente não encontrado, verifique os dados digitados!')
+            }
+            else
+            {
+                document.getElementById('nomecliente').value = cliente.nome
+            }   
+    }
+    else if (buscaIdCliente == '' && buscaNomeCliente != '')
+    {//Busca por nome Cliente
+        let result = await fetch (apiUrlPedido+'/cliente/buscapornome/'+buscaNomeCliente, options);
+        let cliente = await result.json()
+
+            if (cliente.length > 0)
+            {
+                document.getElementById('nomecliente').value = cliente[0].nome
+                document.getElementById('codigocliente').value = cliente[0].id_cliente            
+            }
+            else
+            {
+                alert('Cliente não encontrado, verifique os dados digitados!')
+            }
+    } 
+    else 
+    {
+        alert('ATENÇÃO, insira o código do cliente ou o nome de cliente para continuar!')
+    }
 }

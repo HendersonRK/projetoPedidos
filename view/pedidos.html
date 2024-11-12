@@ -8,10 +8,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
 
     <title>CRIE Delivery</title>
-    
+   
 </head>
 <body>
-    
     <nav class="sidebar">
         <a href="#" class="logo">CRIE_Ti</a>
 
@@ -76,6 +75,9 @@
                         <li class="item">
                             <a href="tipofrete.html">Tipo de Frete</a>
                         </li>
+                        <li class="item">
+                            <a href="cadmarca.html">Marca</a>
+                        </li>
                     </ul>
                 </li>
 
@@ -130,20 +132,19 @@
         <i class="fa-solid fa-bars" id="sidebar-close"></i>
     </nav>
 
-        <main class="main">
+    <main>
         <div class="divmain">
             <div class="mainheader">
                 <h2>Pedidos</h2>
                 <button class="btnacao" onclick="openModalPedidos(null);">Incluir</button>
             </div>
-            
+
             <div class="tabela">
                 <table>
                     <thead>
                         <tr>
                             <th>Editar</th>
                             <th>Excluir</th>
-                            <th>Itens</th>
                             <th>Código</th>
                             <th>Cliente</th>
                             <th>Data</th>
@@ -152,35 +153,34 @@
                     </thead>
                     <tbody id="tbody-pedido"></tbody>
                 </table>
-            </div>                            
+            </div>
         </div>
         
         <div class="modal-container">
             <div class="modal">
-                
-                <form onsubmit="return false">                    
-                    <div class="tab">
-                        <button class="tablinks" onclick="openPedido(event, 'pedido')">Pedido</button>
-                        <button class="tablinks" onclick="openPedido(event, 'pedidoitens')">Produtos</button>
-                    </div>
-                    <div class="tabcontent" id="pedido">
+                <div class="tab">
+                    <button id="default" class="tablinks" onclick="tabsPedido(event, 'pedido')">Pedido</button>
+                    <button class="tablinks" onclick="tabsPedido(event, 'pedidoitens')">Produtos</button>
+                </div>  
+                <div class="tabcontent" id="pedido">
+                    <form onsubmit="return false">
                         <label for="idpedido">Pedido N°</label>
-                        <input type="text" id="idpedido" readonly class="idpedido">                    
+                        <input type="text" id="idpedido" readonly class="idpedido">
+                        
                         <div class="divpedido">
                             <label class="label" for="datapedido">Data:</label>
                             <input type="date" id="datapedido" />
-                            
+                                
                             <label class="label" for="situacaopedido">Situacao:</label>
                             <!--<input name="situacaopedido" type="text" id="situacaopedido" placeholder="situacao do pedido">-->
                             <select name="situacaopedido" id="situacaopedido">
                                 <option value="00">Cancelado</option>
-                                <option value="10">Emitido</option>
+                                <option value="10" selected>Emitido</option>
                                 <option value="20">Pago</option>
                                 <option value="30">Enviado</option>
                                 <option value="40">Entregue</option>
                                 <option value="50">Concluído</option>
                             </select>
-                            
                         </div>
                         <div style="border: 1px solid; display: flex; flex-direction: row; justify-content: center; padding: 10px;">
                             <label class="label" for="observacaopedido">Observação:</label>
@@ -189,37 +189,73 @@
                         <div style="border: 1px solid;">
                             <label class="label" for="selectformapagamento">Forma de Pagamento:</label>
                             <select name="selectformapagamento" id="selectformapagamento"></select>
-                            
+                                
                             <label class="label" for="selectprazopagamento">Prazo de Pagamento:</label>
                             <select name="selectprazopagamento" id="selectprazopagamento"></select>
-                            
+                                
                             <label class="label" for="selecttipofrete">Tipo de Frete:</label>
                             <select name="selecttipofrete" id="selecttipofrete"></select>
                         </div>
                         <div class="divpedido">
                             <label class="label" for="codigocliente">Cliente:</label>
-                            <input name="codigocliente" type="number" id="codigocliente" style="width: 50px;" maxlength="4">
-                            <input name="nomecliente" type="text" id="nomecliente">
-                            <button class="btn" onclick=""><i class="fa-solid fa-magnifying-glass"></i></button>
-                        </div>                 
+                            <input name="codigocliente" type="number" id="codigocliente" style="width: 50px;" maxlength="4" onchange="buscarCliente()">
+                            <input name="nomecliente" type="text" id="nomecliente" onchange="buscarCliente()">
+                            <button class="btn" onclick="buscarCliente()"><i class="fa-solid fa-magnifying-glass"></i></button>
+                        </div>
                         <button class="btnacao" onclick="gravarPedido()">Gravar</button>
                         <button class="btnexcluir">Cancelar</button>
-                    </div>
+                    </form>
 
-                    <div class="tabcontent" id="pedidoitens">
-                        <div class="divpedidoitem">
-                            <label for="idproduto">Produto</label>
-                            <input type="number" name="idproduto" id="idproduto" class="idproduto">
-                            
+                </div>
+                
+                <div class="tabcontent" id="pedidoitens">
+                    <form onsubmit="return false">
+                        <input type="number" name="idpedidoitem" id="idpedidoitem" class="idpedidoitem" style="display: none;">
+                        <div>
+                            <div class="divpedidoitem">
+                                <label for="idproduto">Produto</label>                                    
+                                <input class="idpedido" type="number" id="idprodutopedido" onchange="buscarProduto()">
+                                <input type="text" id="nomeprodutopedido" onchange="buscarProduto()">
+                                <button class="btn" onclick="buscarProduto()"><i class="fa-solid fa-magnifying-glass"></i></button>
+                            </div>
+                           
+                            <div class="pedidoitem">
+                                <div>
+                                    <label for="quantidadeproduto">Quant.:</label>
+                                    <input class="inputpedido" type="number" name="quantidadeproduto" id="quantidadeproduto" onchange="calculaTotal()">
+                                </div>
+                                <div>
+                                    <label for="valorunitario">Valor Unit.:</label>
+                                    <input class="inputpedido" type="number" name="valorunitario" id="valorunitario" onchange="calculaTotal()">
+                                </div>
+                                <div>
+                                    <label for="valortotal">Valor Total:</label>
+                                    <input class="inputpedido" type="number" name="valortotal" id="valortotal">
+                                </div>
+                            </div>
+                           
                         </div>
-                        <input type="text" placeholder="quantidade produto">
-                    </div>
+                        <button class="btnacao" onclick="gravarItem()">Gravar</button>
+                    </form>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Editar</th>
+                                <th>Excluir</th>
+                                <th>Produto</th>
+                                <th>Quant.</th>
+                                <th>Valor Uni.</th>
+                                <th>Valor Total</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbody-pedidoitem"></tbody>
+                    </table>
 
-                </form>
+                </div>
+
             </div>
         </div>
-    </main> 
-    
+    </main>
 </body>
     <script src="src/js/style.js"></script>
     <script src="src/js/login.js"></script>
@@ -228,6 +264,7 @@
     <script src="src/js/prazopagamento.js"></script>
     <script src="src/js/tipofrete.js"></script>
     <script src="src/js/cadclientes.js"></script>
+    <script src="src/js/produtos.js"></script>
     <script>
     async function start()
     {
@@ -238,5 +275,6 @@
         await montaSelectTipoFrete()
     }
     start();
-</script> 
+    document.getElementById('default').click()
+    </script> 
 </html>

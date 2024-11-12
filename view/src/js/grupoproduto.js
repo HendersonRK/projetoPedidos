@@ -1,4 +1,3 @@
-const apiUrlGrupoProduto = "http://localhost:3000"
 const modalGrupoProduto = document.querySelector('.modal-container')
 
 //funções do frontend
@@ -44,21 +43,9 @@ async function gravarGrupoProduto()
         "descricaogrupoproduto" : document.getElementById('descricaogrupoproduto').value
     }
 
-    const myHeaders = new Headers()
-    myHeaders.append("Content-Type", "application/json")
-    myHeaders.append('Authorization', authorization)
+    let result = await myPost(url, method, grupoProduto)
 
-    const options = {
-        method: method,
-        body: JSON.stringify(grupoProduto),
-        headers: myHeaders,
-        redirect: "follow"
-    };
-
-    let result = await fetch (apiUrlGrupoProduto+url, options)
-    let grupoProdutoResult = await result.json();
-
-    if (grupoProdutoResult.descricaogrupoproduto)
+    if (result.descricaogrupoproduto)
     {
         alert("Grupo do Produto cadastrado com sucesso");
         window.location.reload();
@@ -69,28 +56,19 @@ async function gravarGrupoProduto()
     }
 }
 
-async function listarGrupoProduto() 
+async function listarGrupoProduto(buscarGrupoProduto = '') 
 {
-    const myHeaders = new Headers()
-    myHeaders.append("Content-Type", "application/json")
-    myHeaders.append('Authorization', authorization)
+    let url = buscarGrupoProduto == '' ? '/grupoproduto' : '/grupoproduto/buscapornome/'+buscarGrupoProduto
 
-    const options ={
-        headers: myHeaders,
-        method: 'GET',
-        redirect: 'follow'
-    };
-
-    let result = await fetch (apiUrlGrupoProduto+'/grupoproduto', options)
-    let grupoProdutos = await result.json()
+    let result = myGet(url)
     
-    return grupoProdutos
+    return result
 }
 
-async function motaTabelaGrupoProduto() 
+async function motaTabelaGrupoProduto(buscarGrupoProduto) 
 {
     let html = ''
-    let resultados = await listarGrupoProduto()
+    let resultados = await listarGrupoProduto(buscarGrupoProduto)
 
     for (let index = 0; index < resultados.length; index++)
     {
@@ -127,20 +105,10 @@ async function excluirGrupoProduto(id)
 {
     if (confirm("Deseja realmente excluir o cadastro?"))  
     {
-        const myHeaders = new Headers()
-        myHeaders.append("Content-Type", "application/json")
-        myHeaders.append('Authorization', authorization)
+        let url = '/grupoproduto/'+id
+        let result = await myGet(url, 'DELETE') 
 
-        const options = {
-            headers: myHeaders,
-            method: 'DELETE',
-            redirect: 'follow'
-        };
-
-        let result = await fetch(apiUrlGrupoProduto+'/grupoproduto/'+id, options);
-        let json = await result.json();
-
-        if(json.OK = true)
+        if(result.OK = true)
         {
             alert("Grupo Produto EXCLUIDA com sucesso!")
             window.location.reload();
@@ -156,19 +124,11 @@ async function carregaGrupoProduto(id)
 {   
     if(id != null && !isNaN(id))
     {
-        const myHeaders = new Headers()
-        myHeaders.append("Content-Type", "application/json")
-        myHeaders.append('Authorization', authorization)
-
-        const options = {
-            headers: myHeaders,
-        };
-
-        let result = await fetch(apiUrlGrupoProduto+'/grupoproduto/'+id, options)
-        let grupoProduto = await result.json();
+        let url = '/grupoproduto/'+id
+        let result = await myGet(url)
  
-        document.getElementById('idgrupoproduto').value = grupoProduto.id_grupoproduto;
-        document.getElementById('descricaogrupoproduto').value = grupoProduto.descricaogrupoproduto;
+        document.getElementById('idgrupoproduto').value = result.id_grupoproduto;
+        document.getElementById('descricaogrupoproduto').value = result.descricaogrupoproduto;
     }
 }
 

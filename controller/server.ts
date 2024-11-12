@@ -12,6 +12,8 @@ import { routeTipoFrete } from './routes/routetipofrete';
 import { routeCliente } from './routes/routecliente';
 import { routePrazoPagamento } from './routes/routeprazopagamento';
 import { routePedido } from './routes/routepedido';
+import { routePedidoItem } from './routes/routepedidoitem';
+import { routeMarca } from './routes/routemarca';
 
 const port: Number = 3000;
 let server: Express = express();
@@ -30,6 +32,8 @@ server.use(routeTipoFrete)
 server.use(routeCliente)
 server.use(routePrazoPagamento)
 server.use(routePedido)
+server.use(routePedidoItem)
+server.use(routeMarca)
 
 
 server.use(async(req: Request, res: Response, next: NextFunction) =>

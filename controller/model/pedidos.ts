@@ -1,4 +1,5 @@
-import { client, dbQuery } from '../database';
+import { client, dbQuery } from '../database'
+import * as puppeteer from 'punycode'
 
 export class Pedido
 {
@@ -73,7 +74,6 @@ export class Pedido
 
         let params = [this.datapedido, this.situacao, this.observacoes, this.id_formapagamento, this.id_prazopagamento, this.id_cliente, this.id_tipofrete];
         let resultado = await dbQuery(sql, params);
-        console.log(resultado+' no pedido.ts')
 
         if (resultado.length >0)
         {
@@ -84,7 +84,7 @@ export class Pedido
 
     public async update():Promise<Pedido | null>
     {
-        let sql = `UPDATE cliente SET datapedido = $1, situacao = $2, observacoes = $3, id_formapagamento = $4, 
+        let sql = `UPDATE pedido SET datapedido = $1, situacao = $2, observacoes = $3, id_formapagamento = $4, 
         id_prazopagamento = $5, id_cliente = $6, id_tipofrete = $7 WHERE id_pedido = $8;`    
 
         let params = [this.datapedido, this.situacao, this.observacoes, this.id_formapagamento, this.id_prazopagamento, this.id_cliente, this.id_tipofrete, this.id_tipofrete];
@@ -100,7 +100,7 @@ export class Pedido
 
     public async delete():Promise<Pedido | null>
     {
-        let sql = `DELETE FROM pedido WHERE id_cliente = $1 RETURNING id_pedido;`
+        let sql = `DELETE FROM pedido WHERE id_pedido = $1 RETURNING id_pedido;`
         let resultado = await dbQuery(sql, [this.id_pedido])
         if (resultado.length > 0)
         {
@@ -108,5 +108,81 @@ export class Pedido
             return this
         }
         return null        
+    }
+
+    public async pdf()
+    {
+        const htmlImpressao = `
+        <!DOCTYPE html>
+            <html lang="pt-BR">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Pedido de Compra - Impressão</title>
+                <style>
+                    body {
+                        font-family: Arial, sans-serif;
+                        background-color: #ffffff;
+                        color: #000000;
+                        margin: 20px;
+                    }
+                    h1 {
+                        text-align: center;
+                        color: #000000;
+                    }
+                    table {
+                        width: 100%;
+                        border-collapse: collapse;
+                        margin-top: 20px;
+                    }
+                    th, td {
+                        border: 1px solid #000000;
+                        padding: 10px;
+                        text-align: left;
+                    }
+                    th {
+                        background-color: #f2f2f2;
+                    }
+                </style>
+            </head>
+            <body>
+                <h1>Pedido de Compra</h1>
+                <table>
+                    <tr>
+                        <th>ID do Pedido</th>
+                        <td>${this.id_pedido}</td>
+                    </tr>
+                    <tr>
+                        <th>Nome</th>
+                        <td>${this.datapedido}</td>
+                    </tr>
+                    <tr>
+                        <th>Cidade</th>
+                        <td>${this.situacao}</td>
+                    </tr>
+                    <tr>
+                        <th>Estado</th>
+                        <td>${this.observacoes}</td>
+                    </tr>
+                    <tr>
+                        <th>Forma de Pagamento</th>
+                        <td>${this.id_cliente}</td>
+                    </tr>
+                    <tr>
+                        <th>Prazo de Pagamento</th>
+                        <td>${this.id_formapagamento}</td>
+                    </tr>
+                    <tr>
+                        <th>Tipo de Frete</th>
+                        <td>${this.id_prazopagamento}</td>
+                    </tr>
+                    <tr>
+                        <th>Observações</th>
+                        <td>${this.id_tipofrete}</td>
+                    </tr>
+                </table>            
+            </body>
+        </html>
+        `
     }
 }

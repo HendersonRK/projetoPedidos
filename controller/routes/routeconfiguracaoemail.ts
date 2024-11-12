@@ -14,7 +14,6 @@ routeConfiguracao.get('/configuracoes/email', async (req:Request, res:Response):
 //edita as configurações de email no banco de dados
 routeConfiguracao.put('/configuracoes/email', async (req:Request, res:Response) =>
 {
-    let id = 1
     let configuracao = await Configuracoes.listarConfiguracoes()
         
     if (configuracao == null)

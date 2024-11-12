@@ -4,6 +4,12 @@ CREATE TABLE grupoproduto (
     PRIMARY KEY (id_grupoproduto)
 );
 
+CREATE TABLE marca (
+    id_marca serial, 
+    descricaomarca varying character(50), 
+    PRIMARY KEY (id_marca)
+);
+
 CREATE TABLE unidadeproduto (
     id_unidadeproduto serial,
     descricaouniproduto character varying(50),
@@ -44,10 +50,6 @@ CREATE TABLE configuracoes (
     emailpassword character varying(100),
     PRIMARY KEY (id_configuracao)
 );
-
-INSERT INTO configuracoes (hostname, emailretorno, porta, emailusername, emailpassword)
-VALUES ('smtp.mailersend.net', 'email@trial-3z0vklo2vj747qrx.mlsender.net', 587, 'MS_9TWvnC@trial-3z0vklo2vj747qrx.mlsender.net', 'v0PEwbfIWreXxG6V')
-RETURNING id_configuracao;
 
 CREATE TABLE cliente (
     id_cliente serial,
@@ -99,3 +101,14 @@ CREATE TABLE pedidoitem (
     FOREIGN KEY (id_pedido) REFERENCES pedido (id_pedido),
     FOREIGN KEY (id_produto) REFERENCES produto (id_produto)
 );
+
+ALTER TABLE produto ADD COLUMN marca int;
+
+
+INSERT INTO configuracoes (hostname, emailretorno, porta, emailusername, emailpassword)
+VALUES ('smtp.mailersend.net', 'email@trial-3z0vklo2vj747qrx.mlsender.net', 587, 'MS_9TWvnC@trial-3z0vklo2vj747qrx.mlsender.net', 'v0PEwbfIWreXxG6V')
+RETURNING id_configuracao;
+
+INSERT INTO usuario (usuario, senha)
+VALUES ('admin', 'admin')
+RETURNING id_usuario;

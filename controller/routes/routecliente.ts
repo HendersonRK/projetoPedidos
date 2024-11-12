@@ -64,7 +64,7 @@ routeCliente.delete('/cliente/:id', async (req: Request, res: Response): Promise
     return res.status(200).json(retorno);
 });
 
-//edita tipo de frete
+//edita cliente
 routeCliente.put('/cliente/:id', async (req: Request, res: Response): Promise<Response> => 
 {
     let id = Number(req.params.id);

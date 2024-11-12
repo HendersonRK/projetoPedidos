@@ -1,4 +1,3 @@
-const apiUrl = "http://localhost:3000"
 const modal = document.querySelector('.modal-container')
 
 //funções do frontend
@@ -37,28 +36,16 @@ function openModalFormaPagamento(editar = false, id)
 async function gravaFrmPagamento() 
 {
     let id = document.getElementById('idformapagamento').value
-    let method = id === '' ? 'POST' : 'PUT'
-    let url = id === '' ? "/formapagamento" : "/formapagamento/"+id;
+    let method = id == '' ? 'POST' : 'PUT'
+    let url = id == '' ? "/formapagamento" : "/formapagamento/"+id;
     
     let formapagamento = {
         "descricaofrmpagamento": document.getElementById('descricaofrmpagamento').value
     };
 
-    const myHeaders = new Headers()
-    myHeaders.append("Content-Type", "application/json")
-    myHeaders.append('Authorization', authorization)
+    let result = await myPost(url, method, formapagamento)
 
-    const options = {
-        method: method,
-        body: JSON.stringify(formapagamento),
-        headers: myHeaders,
-        redirect: "follow"
-    };
-
-    let result = await fetch (apiUrl+url, options);
-    let formaPagamentoResult = await result.json();
-
-    if (formaPagamentoResult.descricaofrmpagamento)
+    if (result.descricaofrmpagamento)
     {
         alert('Forma de Pagamento cadastrada com sucesso!')
         window.location.reload();
@@ -69,30 +56,20 @@ async function gravaFrmPagamento()
     }
 }
 
-async function listarFrmPagamento(buscaFormaPagamneto='') 
+async function listarFrmPagamento(buscaFormaPagamento='') 
 {
-    let url = buscaFormaPagamneto === '' ? '/formapagamento' : '/formapagamento/buscapornome/'+buscaFormaPagamneto
-
-    const myHeaders = new Headers()
-    myHeaders.append("Content-Type", "application/json")
-    myHeaders.append('Authorization', authorization)
-
-    const options ={
-        headers: myHeaders,
-        method: 'GET',
-        redirect: 'follow'
-    };
+    let url = buscaFormaPagamento == '' ? '/formapagamento' : '/formapagamento/buscapornome/'+buscaFormaPagamento
     
-    let result = await fetch (apiUrl+url, options);
-    let formasPagamento = await result.json();
+    let result = await myGet(url)
     
-    return formasPagamento    
+    return result    
 }
 
-async function montaTabelaFormaPagamento(buscaFormaPagamneto) 
+async function montaTabelaFormaPagamento(buscaFormaPagamento) 
 { 
     let html = ''
-    let resultado = await listarFrmPagamento(buscaFormaPagamneto)
+    let resultado = await listarFrmPagamento(buscaFormaPagamento)
+    
     for (let index = 0; index < resultado.length; index++)
     {        
         let formaPagamento = resultado[index];      
@@ -124,25 +101,14 @@ async function montaSelectFormaPagamento()
     document.getElementById('selectformapagamento').innerHTML = html
 }
 
-
 async function excluirFormaPagamento(id) 
 {
     if (confirm("Deseja excluir forma de pagamento?"))
     {
-        const myHeaders = new Headers()
-        myHeaders.append("Content-Type", "application/json")
-        myHeaders.append('Authorization', authorization)
+        let url = '/formapagamento/'+id
+        let result = await myGet(url, 'DELETE')
 
-        const options = {
-            headers: myHeaders,
-            method: 'DELETE',
-            redirect: 'follow'
-        };
-        
-        let result = await fetch(apiUrl+'/formapagamento/'+id, options)
-        let json = await result.json();
-
-        if (json.OK === true)
+        if (result.OK === true)
         {
             alert("Forma de pagamento EXCLUIDA com sucesso!")
             window.location.reload();
@@ -158,19 +124,11 @@ async function carregaFormaPagamento(id)
 {   
     if(id != null && !isNaN(id))
     {
-        const myHeaders = new Headers()
-        myHeaders.append("Content-Type", "application/json")
-        myHeaders.append('Authorization', authorization)
-
-        const options = {
-            headers: myHeaders,
-        };
-
-        let result = await fetch(apiUrl+"/formapagamento/"+id, options)
-        let formaPagamento = await result.json();
+        let url = '/formapagamento/'+id
+        let result = await myGet(url)
  
-        document.getElementById('idformapagamento').value = formaPagamento.id_frmpagamento
-        document.getElementById('descricaofrmpagamento').value = formaPagamento.descricaofrmpagamento
+        document.getElementById('idformapagamento').value = result.id_frmpagamento
+        document.getElementById('descricaofrmpagamento').value = result.descricaofrmpagamento
     }
 }
 

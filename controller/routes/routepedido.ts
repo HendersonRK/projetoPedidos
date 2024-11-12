@@ -10,7 +10,7 @@ routePedido.get('/pedido', async (req: Request, res: Response): Promise<Response
     return res.status(200).json(pedido);
 });
 
-//retorna uma pedido do bancdo de dados
+//retorna um pedido do bancdo de dados
 routePedido.get('/pedido/:codigo', async (req: Request, res: Response): Promise<Response> => 
 {
     let id = Number(req.params.codigo)
@@ -25,7 +25,7 @@ routePedido.get('/pedido/:codigo', async (req: Request, res: Response): Promise<
     return res.status(400).json(erro)
 });
 
-//grava forma de pagamento no banco de dados
+//grava pedido no banco de dados
 routePedido.post('/pedido', async (req: Request, res: Response): Promise<Response> => 
 {
     let pedido = new Pedido();
