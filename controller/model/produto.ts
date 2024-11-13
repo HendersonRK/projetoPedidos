@@ -8,6 +8,7 @@ export class Produto
     codigobarra: string = ''
     id_unidade: number = 0
     id_grupo: number = 0
+    id_marca: number = 0
 
     validate()
     {
@@ -60,13 +61,14 @@ export class Produto
     public async insert():Promise<Produto|null>
     {
         let sql = `INSERT INTO produto (nomeproduto, nomeprodutoresumido, codigobarra, id_unidade, id_grupo) 
-            VALUES ($1, $2, $3, $4, $5) RETURNING id_produto;`;
+            VALUES ($1, $2, $3, $4, $5, $6) RETURNING id_produto;`;
 
         let params = [this.nomeproduto,
             this.nomeprodutoresumido,
             this.codigobarra, 
             this.id_unidade,
-            this.id_grupo];
+            this.id_grupo,
+            this.id_marca];
 
         let resultado = await dbQuery(sql, params);
 
@@ -79,8 +81,8 @@ export class Produto
 
     public async update():Promise<Produto|null>
     {
-        let sql = `UPDATE produto SET nomeproduto = $1, nomeprodutoresumido = $2, codigobarra = $3, id_unidade = $4, id_grupo = $5 WHERE id_produto = $6;`;    
-        let params = [this.nomeproduto, this.nomeprodutoresumido, this.codigobarra, this.id_unidade, this.id_grupo, this.id_produto];
+        let sql = `UPDATE produto SET nomeproduto = $1, nomeprodutoresumido = $2, codigobarra = $3, id_unidade = $4, id_grupo = $5, id_marca = $6 WHERE id_produto = $7;`;    
+        let params = [this.nomeproduto, this.nomeprodutoresumido, this.codigobarra, this.id_unidade, this.id_grupo, this.id_marca, this.id_produto];
 
         let resultado = await dbQuery(sql,params);
         

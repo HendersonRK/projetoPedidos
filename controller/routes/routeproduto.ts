@@ -34,6 +34,7 @@ routeProduto.post('/produto', async (req: Request, res: Response): Promise<Respo
     produto.codigobarra = req.body.codigobarra
     produto.id_unidade = req.body.id_unidade
     produto.id_grupo = req.body.id_grupo
+    produto.id_marca = req.body.id_marca
     
     let erros : string[] = produto.validate()
 
@@ -83,6 +84,7 @@ routeProduto.put('/produto/:codigo', async (req: Request, res: Response): Promis
     produto.codigobarra = req.body.codigobarra
     produto.id_unidade = req.body.idunidade
     produto.id_grupo = req.body.idgrupo
+    produto.id_marca = req.body.id_marca
     
     let erros : string[] = produto.validate()
 

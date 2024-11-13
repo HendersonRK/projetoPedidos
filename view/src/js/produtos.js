@@ -44,6 +44,9 @@ async function gravarProduto()
 
     let selectGrupo = document.getElementById('selectgrupoproduto')
     let valorGrupo = selectGrupo.value
+
+    let selectMarca = document.getElementById('selectmarca')
+    let valorMarca = selectMarca.value
     
 
     let produto = {
@@ -51,7 +54,8 @@ async function gravarProduto()
         "nomeprodutoresumido": document.getElementById('nomeprodutoreduzido').value,
         "codigobarra": document.getElementById('codigobarra').value,
         "id_unidade": valorUnidade,
-        "id_grupo": valorGrupo
+        "id_grupo": valorGrupo,
+        "id_marca": valorMarca
     };
 
     const options = {        
@@ -169,6 +173,7 @@ async function carregarProduto(id)
         document.getElementById('codigobarra').value = produto.codigobarra
         document.getElementById('selectunidadeproduto').value = produto.id_unidade
         document.getElementById('selectgrupoproduto').value = produto.id_grupo
+        document.getElementById('selectmarca').value = produto.id_marca
     }    
 }
 

@@ -183,10 +183,14 @@
                         <select name="selectunidadeproduto" id="selectunidadeproduto"></select>
                     </div>
                     <div>                        
-                        <label for="selectgrupoproduto">Grupo:</label>
+                        <label for="selectgrupoproduto">Grupo/Cor:</label>
                         <select name="selectgrupoproduto" id="selectgrupoproduto"></select>
                     </div>
-                    
+                    <div>                        
+                        <label for="selectmarca">Marcas:</label>
+                        <select name="selectmarca" id="selectmarca"></select>
+                    </div>
+
                     <button class="btnacao" onclick="gravarProduto();">Gravar</button>
                 </form>
             </div>
@@ -199,13 +203,15 @@
     <script src="src/js/produtos.js"></script>
     <script src="src/js/unidadeproduto.js"></script>
     <script src="src/js/grupoproduto.js"></script>
+    <script src="src/js/cadmarca.js"></script>
     <script>
         async function start()
         {
             await verificaLogin()
             await montaTabelaProduto() 
             await montaSelectUnidadeProduto() 
-            await montaSelectGrupoProduto()  
+            await montaSelectGrupoProduto() 
+            await montaSelectMarca() 
         }
         start()
     </script>

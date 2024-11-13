@@ -6,7 +6,7 @@ CREATE TABLE grupoproduto (
 
 CREATE TABLE marca (
     id_marca serial, 
-    descricaomarca varying character(50), 
+    descricaomarca character varying(50), 
     PRIMARY KEY (id_marca)
 );
 
@@ -104,6 +104,8 @@ CREATE TABLE pedidoitem (
 
 ALTER TABLE produto ADD COLUMN marca int;
 
+ALTER TABLE produto RENAME marca TO id_marca;
+
 
 INSERT INTO configuracoes (hostname, emailretorno, porta, emailusername, emailpassword)
 VALUES ('smtp.mailersend.net', 'email@trial-3z0vklo2vj747qrx.mlsender.net', 587, 'MS_9TWvnC@trial-3z0vklo2vj747qrx.mlsender.net', 'v0PEwbfIWreXxG6V')
@@ -112,3 +114,4 @@ RETURNING id_configuracao;
 INSERT INTO usuario (usuario, senha)
 VALUES ('admin', 'admin')
 RETURNING id_usuario;
+

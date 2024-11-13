@@ -1,4 +1,5 @@
 const modalGrupoProduto = document.querySelector('.modal-container')
+const apiUrlGrupoProdutos = "http://localhost:3000"
 
 //funções do frontend
 function pressEnter()
@@ -60,7 +61,18 @@ async function listarGrupoProduto(buscarGrupoProduto = '')
 {
     let url = buscarGrupoProduto == '' ? '/grupoproduto' : '/grupoproduto/buscapornome/'+buscarGrupoProduto
 
-    let result = myGet(url)
+    const myHeaders = new Headers()
+    myHeaders.append("Content-Type", "application/json")
+    myHeaders.append('Authorization', authorization)
+
+    const options = {
+        headers: myHeaders,
+        method: 'GET',
+        redirect: "follow"
+    }    
+
+    let resultado = await fetch(apiUrlGrupoProdutos+url, options)
+    return await resultado.json()
     
     return result
 }
